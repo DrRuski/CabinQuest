@@ -1,3 +1,7 @@
 export default function App() {
-  return <div className="text-black">Welcome to Elias` Glorious Goods</div>;
+  return (
+    <h1 className="text-3xl font-bold underline">
+      Welcome to Elias` Glorious Bookings
+    </h1>
+  );
 }
