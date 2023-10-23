@@ -9,6 +9,7 @@ export default {
       primary: "var(--primary)",
       secondary: "var(--secondary)",
       accent: "var(--accent)",
+      buttonText: "#fdfefb",
     },
     fontSize: {
       sm: "0.750rem",
@@ -20,8 +21,8 @@ export default {
       "5xl": "4.210rem",
     },
     fontFamily: {
-      heading: "Roboto",
-      body: "Roboto",
+      heading: ["Roboto", "sans-serif"],
+      body: ["Roboto", "sans-serif"],
     },
     fontWeight: {
       normal: "400",

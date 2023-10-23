@@ -1,7 +1,14 @@
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/layout/layout";
+import Login from "./pages/authentication/login";
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Welcome to Elias` Glorious Bookings
-    </h1>
+    <div>
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="home" element={<Layout />}></Route>
+      </Routes>
+    </div>
   );
 }
