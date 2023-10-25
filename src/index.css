@@ -19,3 +19,17 @@
         --accent: #54c966;
     }
 }
+
+
+/* NavLink */
+.active {
+    color: #36ab47;
+}
+
+.inActive {
+    color: #d5e6f6;
+}
+
+.inActive:hover {
+    color: #d88a41;
+}

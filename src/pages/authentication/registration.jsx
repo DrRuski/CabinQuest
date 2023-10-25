@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Form from "../../components/form/form";
 import FormInput from "../../components/form/formInput";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { API_BASE_URL } from "../../data/url/apiBaseURL";
 
 export default function Registration() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -13,10 +14,21 @@ export default function Registration() {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setAuthenticated(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/holidaze/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data, null, 2),
+      });
+      return await response.json();
+    } catch (error) {
+      console.error(error.message);
+    }
     reset();
-    console.log(JSON.stringify(data, null, 2));
     setTimeout(() => {
       setAuthenticated(false);
     }, 3000);
@@ -32,7 +44,7 @@ export default function Registration() {
           label="Username"
           type="text"
           register={register}
-          name="username"
+          name="name"
           errors={errors}
           className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:border"
         />

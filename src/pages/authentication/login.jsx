@@ -1,10 +1,14 @@
 import Form from "../../components/form/form";
 import FormInput from "../../components/form/formInput";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../../App";
+
+import { API_BASE_URL } from "../../data/url/apiBaseURL";
 
 export default function Login() {
   const [authenticated, setAuthenticated] = useState(false);
+  const { setUserData } = useContext(UserContext);
 
   const {
     register,
@@ -13,10 +17,22 @@ export default function Login() {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setAuthenticated(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/holidaze/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data, null, 2),
+      });
+      const responseData = await response.json();
+      setUserData(responseData);
+    } catch (error) {
+      console.error(error.message);
+    }
     reset();
-    console.log(JSON.stringify(data, null, 2));
     setTimeout(() => {
       setAuthenticated(false);
     }, 3000);
