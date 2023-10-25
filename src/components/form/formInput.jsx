@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
 
 FormInput.propTypes = {
-  label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   register: PropTypes.func.isRequired,
-  type: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  label: PropTypes.string,
   required: PropTypes.string,
   errors: PropTypes.object,
   minLength: PropTypes.number,
   maxLength: PropTypes.number,
-  patternValue: PropTypes.string,
+  patternValue: PropTypes.instanceOf(RegExp),
   patternMessage: PropTypes.string,
-  inputStyle: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default function FormInput({
@@ -25,13 +25,13 @@ export default function FormInput({
   errors,
   patternValue,
   patternMessage,
-  inputStyle,
+  className,
 }) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-1">
       <label htmlFor={name}>{label}</label>
       <input
-        className={inputStyle}
+        className={className}
         type={type}
         {...register(name, {
           required: required,
@@ -43,7 +43,7 @@ export default function FormInput({
           },
         })}
       />
-      <p>{errors[name]?.message}</p>
+      <p className="text-sm text-error">{errors[name]?.message}</p>
     </div>
   );
 }

@@ -10,6 +10,9 @@ export default {
       secondary: "var(--secondary)",
       accent: "var(--accent)",
       buttonText: "#fdfefb",
+      link: "#362FD9",
+      warning: "#FFA559",
+      error: "#E74646",
     },
     fontSize: {
       sm: "0.750rem",
@@ -26,6 +29,7 @@ export default {
     },
     fontWeight: {
       normal: "400",
+      semiBold: "600",
       bold: "700",
     },
   },
