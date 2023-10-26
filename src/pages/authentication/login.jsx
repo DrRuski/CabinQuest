@@ -4,11 +4,14 @@ import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
 import { UserContext } from "../../App";
 
-import { API_BASE_URL } from "../../data/url/apiBaseURL";
+import { useNavigate } from "react-router-dom";
+import { authFetchHead } from "../../data/authentication/authFetchHead";
 
 export default function Login() {
   const [authenticated, setAuthenticated] = useState(false);
   const { setUserData } = useContext(UserContext);
+  const loginEndpoint = "/holidaze/auth/login";
+  const navigate = useNavigate();
 
   const {
     register,
@@ -18,24 +21,27 @@ export default function Login() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setAuthenticated(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/holidaze/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data, null, 2),
-      });
-      const responseData = await response.json();
-      setUserData(responseData);
+      const response = await authFetchHead(data, loginEndpoint);
+      if (response.ok) {
+        const responseData = await response.json();
+        setUserData(responseData);
+        setAuthenticated(true);
+        reset();
+        setTimeout(() => {
+          setAuthenticated(false);
+        }, 1000);
+      } else {
+        const errorData = await response.json();
+        console.error("Login failed:", errorData.message);
+        throw new Error("Login failed:", errorData.message);
+      }
     } catch (error) {
-      console.error(error.message);
+      console.error("Network error:", error.message);
+      throw new Error("Network error:", error.message);
+    } finally {
+      navigate("/home");
     }
-    reset();
-    setTimeout(() => {
-      setAuthenticated(false);
-    }, 3000);
   };
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -51,7 +57,7 @@ export default function Login() {
           errors={errors}
           patternValue={/^[\w\-.]+@(stud\.)?noroff\.no$/}
           patternMessage="Your email is invalid. - Only stud.noroff.no emails are valid."
-          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:border"
+          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
         />
 
         <FormInput
@@ -60,7 +66,7 @@ export default function Login() {
           register={register}
           name="password"
           errors={errors}
-          className="ps-2 rounded shadow h-8 outline-none"
+          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
         />
         <a
           className="text-sm underline opacity-50 hover:text-link w-fit"

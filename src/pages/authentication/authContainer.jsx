@@ -32,7 +32,7 @@ export default function AuthContainer() {
               </button>
             </div>
 
-            {isOpen ? <Login /> : <Registration />}
+            {isOpen ? <Login /> : <Registration setIsOpen={setIsOpen} />}
 
             <div className=" flex flex-col items-center gap-1 w-3/4">
               <div className="border-t w-[150px] opacity-20"></div>

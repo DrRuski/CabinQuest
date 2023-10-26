@@ -2,10 +2,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../../components/form/form";
 import FormInput from "../../components/form/formInput";
-import { API_BASE_URL } from "../../data/url/apiBaseURL";
+import { authFetchHead } from "../../data/authentication/authFetchHead";
+import PropTypes from "prop-types";
 
-export default function Registration() {
+Registration.propTypes = {
+  setIsOpen: PropTypes.func.isRequired,
+};
+
+export default function Registration({ setIsOpen }) {
   const [authenticated, setAuthenticated] = useState(false);
+  const registerEndpoint = "/holidaze/auth/register";
 
   const {
     register,
@@ -15,23 +21,27 @@ export default function Registration() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setAuthenticated(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/holidaze/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data, null, 2),
-      });
-      return await response.json();
+      const response = await authFetchHead(data, registerEndpoint);
+
+      if (response.ok) {
+        return await response.json();
+      } else {
+        const errorData = await response.json();
+        console.error("Registration failed:", errorData.message);
+        throw new Error("Registration failed:", errorData.message);
+      }
     } catch (error) {
-      console.error(error.message);
+      console.error("Network error:", error.message);
+      throw new Error("Network error:", error.message);
+    } finally {
+      setAuthenticated(true);
+      reset();
+      setTimeout(() => {
+        setAuthenticated(false);
+        setIsOpen(true);
+      }, 3000);
     }
-    reset();
-    setTimeout(() => {
-      setAuthenticated(false);
-    }, 3000);
   };
 
   return (
@@ -46,7 +56,7 @@ export default function Registration() {
           register={register}
           name="name"
           errors={errors}
-          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:border"
+          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
         />
 
         <FormInput
@@ -57,7 +67,7 @@ export default function Registration() {
           errors={errors}
           patternValue={/^[\w\-.]+@(stud\.)?noroff\.no$/}
           patternMessage="Your email is invalid. - Only stud.noroff.no emails are valid."
-          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:border"
+          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
         />
 
         <FormInput
@@ -66,7 +76,7 @@ export default function Registration() {
           register={register}
           name="password"
           errors={errors}
-          className="ps-2 rounded shadow h-8 outline-none"
+          className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
         />
 
         <input
