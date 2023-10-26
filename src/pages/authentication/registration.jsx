@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../../components/form/form";
 import FormInput from "../../components/form/formInput";
-import { authFetchHead } from "../../data/authentication/authFetchHead";
+import { authFetchHeader } from "../../data/fetchHeaders/authFetchHead";
 import PropTypes from "prop-types";
 
 Registration.propTypes = {
@@ -22,7 +22,7 @@ export default function Registration({ setIsOpen }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await authFetchHead(data, registerEndpoint);
+      const response = await authFetchHeader(data, registerEndpoint);
 
       if (response.ok) {
         return await response.json();

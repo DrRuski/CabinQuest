@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../App";
 
 import { useNavigate } from "react-router-dom";
-import { authFetchHead } from "../../data/authentication/authFetchHead";
+import { authFetchHeader } from "../../data/fetchHeaders/authFetchHead";
 
 export default function Login() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -22,7 +22,7 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await authFetchHead(data, loginEndpoint);
+      const response = await authFetchHeader(data, loginEndpoint);
       if (response.ok) {
         const responseData = await response.json();
         setUserData(responseData);

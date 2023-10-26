@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "../url/apiBaseURL";
 
-export const authFetchHead = async (data, endpoint) => {
+export const authFetchHeader = async (data, endpoint) => {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     method: "POST",
     headers: {
