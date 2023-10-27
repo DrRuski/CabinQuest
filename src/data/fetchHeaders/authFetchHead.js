@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../url/apiBaseURL";
+import { API_BASE_URL } from "../url/url";
 
 export const authFetchHeader = async (data, endpoint) => {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {

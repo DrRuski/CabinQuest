@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+// import useData from "./data/read";
 import Layout from "./components/layout/layout";
 import AuthContainer from "./pages/authentication/authContainer";
 import { createContext } from "react";
@@ -12,6 +13,7 @@ export const UserContext = createContext([]);
 export default function App() {
   const [userData, setUserData] = useLocalStorageState({}, "userProfile");
   const userValue = { userData, setUserData };
+  // const { venueData, isLoading } = useData(userData);
   return (
     <div>
       <UserContext.Provider value={userValue}>

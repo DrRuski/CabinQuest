@@ -14,7 +14,7 @@ function NavBar() {
   const { userData } = useContext(UserContext);
   return (
     <nav>
-      <ul className="flex gap-5 text-text">
+      <ul className="flex justify-center gap-5 text-text">
         <li>
           <NavLink
             to="home"

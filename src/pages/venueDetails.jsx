@@ -1,3 +1,8 @@
 export default function VenueDetails() {
-  return <div>Welcome to Venue Details page</div>;
+  document.title = "TBD";
+  return (
+    <main className="flex flex-col gap-16 h-screen">
+      Welcome to Venue Details page
+    </main>
+  );
 }

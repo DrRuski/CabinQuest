@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 import { fetchHeader } from "./fetchHeaders/venueFetchHead";
-import { UserContext } from "../App";
-import { useContext } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-export default function useData() {
+export default function useData(userData) {
+  const [venueData, setVenueData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const location = useLocation();
-  const [venueData, setVenueData] = useState([]);
-  const { userData } = useContext(UserContext);
-  const venuesEndpoint = "/holidaze/venues/";
+
+  console.log(userData);
 
   useEffect(() => {
     const controller = new AbortController();
 
     async function fetchVenues() {
       try {
+        setIsLoading(true);
         const response = await fetchHeader(
           userData.accessToken,
-          venuesEndpoint,
           params.id,
           controller
         );
@@ -28,9 +27,12 @@ export default function useData() {
         }
       } catch (error) {
         console.error("Network error:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchVenues();
+
     return function () {
       controller.abort();
     };
@@ -39,5 +41,6 @@ export default function useData() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-  return { venueData };
+
+  return { venueData, isLoading };
 }

@@ -1,8 +1,10 @@
-import useData from "../data/read";
+import PropTypes from "prop-types";
 
-export default function Home() {
-  const { venueData } = useData();
+Home.propTypes = {
+  children: PropTypes.node,
+};
 
-  console.log(venueData);
-  return <div>Welcome to Homepage THIS IS THE HOME PAGE</div>;
+export default function Home({ children }) {
+  document.title = "Home";
+  return <main className="flex flex-col gap-16 h-screen">{children}</main>;
 }

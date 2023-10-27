@@ -1,3 +1,12 @@
+import { useContext } from "react";
+import { UserContext } from "../App";
+
 export default function UserProfile() {
-  return <div>Welcome to User Profile Page</div>;
+  const { userData } = useContext(UserContext);
+  document.title = `${userData.name}`;
+  return (
+    <main className="flex flex-col gap-16 h-screen">
+      Welcome to User Profile Page
+    </main>
+  );
 }
