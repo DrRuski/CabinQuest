@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    font-family: "Roboto", sans-serif;
+}
+
 @layer base {
     :root {
         --text: #030401;
@@ -23,15 +27,15 @@
 
 /* NavLink */
 .active {
-    color: #36ab47;
+    color: var(--primary);
 }
 
 .inActive {
-    color: #d5e6f6;
+    color: var(--secondary);
 }
 
 .inActive:hover {
-    color: #d88a41;
+    color: var(--accent);
 }
 
 /* Loader */
