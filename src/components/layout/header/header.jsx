@@ -2,11 +2,11 @@ import { NavLink } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-regular-svg-icons";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   return (
-    <header className="shadow sticky top-0 z-50 py-4">
+    <header className="shadow bg-background sticky top-0 z-50 py-4">
       <NavBar />
     </header>
   );
@@ -24,55 +24,61 @@ function NavBar() {
         Cabin<span className="font-bold">Quest</span>
       </NavLink>
 
-      <ul className="flex items-center gap-5 text-text">
+      <ul className="flex items-center gap-5">
         <li>
           <NavLink
             to="dashboard"
             className={({ isActive }) =>
-              isActive ? "active p-1 font-bold" : "inActive p-1"
+              `flex justify-center items-center p-2 ${
+                isActive ? "active font-bold" : "inActive"
+              }`
             }
           >
-            Dashboard Toggle
+            <span>Dashboard Toggle</span>
           </NavLink>
         </li>
         <li>
           <FontAwesomeIcon
-            onClick={() => setIsOpen((open) => !open)}
+            onClick={() => setIsOpen((isOpen) => !isOpen)}
             type="button"
-            className={
-              isOpen
-                ? "active p-1 cursor-pointer"
-                : "inActive p-1 cursor-pointer"
-            }
+            className={`flex justify-center items-center p-2 cursor-pointer rounded ${
+              isOpen ? "active shadow" : "inActive hover:shadow"
+            }`}
             icon={faBell}
             size="lg"
           />
         </li>
         <li>
-          <NavLink
-            to={userData ? `user/${userData.name}` : "user/Guest"}
-            className={({ isActive }) =>
-              isActive ? "active font-bold" : "inActive"
-            }
-          >
-            {!userData ? (
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-6 h-6 bg-primary rounded-full text-center text-buttonText font-bold">
-                  {userData.avatar
-                    ? userData.avatar
-                    : userData.name.slice(0, 1)}
-                </div>
-                {userData.name}
+          {userData ? (
+            <NavLink
+              to={userData ? `user/${userData.name}` : "user/Guest"}
+              className={({ isActive }) =>
+                isActive ? "active font-bold" : "inActive"
+              }
+            >
+              <div className="flex items-center gap-2">
+                {userData.avatar ? (
+                  <img
+                    className="object-cover w-full h-full rounded-full shadow"
+                    src={userData.avatar}
+                    alt={userData.name}
+                  />
+                ) : (
+                  <div className="flex justify-center items-center bg-primary h-9 w-9 text-buttonText shadow rounded-full">
+                    <span>{userData.name.slice(0, 1)}</span>
+                  </div>
+                )}
+                <p>{userData.name}</p>
               </div>
-            ) : (
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-6 h-6 bg-primary rounded-full">
-                  <p className="text-center text-buttonText font-bold">G</p>
-                </div>
-                <p>Guest</p>
-              </div>
-            )}
-          </NavLink>
+            </NavLink>
+          ) : (
+            <NavLink
+              to="login"
+              className={`flex justify-center items-center py-2 px-7 rounded bg-primary shadow text-buttonText font-bold hover:bg-accent hover:text-text`}
+            >
+              <span>Sign Up</span>
+            </NavLink>
+          )}
         </li>
       </ul>
     </nav>

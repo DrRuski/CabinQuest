@@ -6,5 +6,7 @@ Home.propTypes = {
 
 export default function Home({ children }) {
   document.title = "Home";
-  return <main className="flex flex-col gap-16 h-screen">{children}</main>;
+  return (
+    <section className="flex flex-col gap-16 h-screen">{children}</section>
+  );
 }

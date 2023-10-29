@@ -18,9 +18,9 @@ export default function App() {
     <div>
       <UserContext.Provider value={userValue}>
         <Routes>
-          <Route index element={<AuthContainer />}></Route>
+          <Route path="login" element={<AuthContainer />}></Route>
           <Route element={<Layout />}>
-            <Route path="home" element={<Home />}></Route>
+            <Route index path="home" element={<Home />}></Route>
             <Route
               path={`user/${userData.name}`}
               element={<UserProfile />}

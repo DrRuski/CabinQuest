@@ -8,12 +8,10 @@ export default function useData(userData) {
   const params = useParams();
   const location = useLocation();
 
-  console.log(userData);
-
   useEffect(() => {
     const controller = new AbortController();
 
-    async function fetchVenues() {
+    async function fetchData() {
       try {
         setIsLoading(true);
         const response = await fetchHeader(
@@ -31,7 +29,7 @@ export default function useData(userData) {
         setIsLoading(false);
       }
     }
-    fetchVenues();
+    fetchData();
 
     return function () {
       controller.abort();
