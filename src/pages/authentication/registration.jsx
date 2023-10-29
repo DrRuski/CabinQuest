@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Form from "../../components/form/form";
-import FormInput from "../../components/form/formInput";
+import Form from "../../components/common/form/form";
+import FormInput from "../../components/common/form/formInput";
 import { authFetchHeader } from "../../data/fetchHeaders/authFetchHead";
 import PropTypes from "prop-types";
 

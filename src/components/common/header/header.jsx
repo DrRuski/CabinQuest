@@ -16,27 +16,15 @@ function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const { userData } = useContext(UserContext);
   return (
-    <nav className="container m-auto flex flex-col items-center gap-4 md:flex-row md:justify-between h-full">
+    <nav className="container mx-auto flex flex-col items-center gap-4 md:flex-row md:justify-between h-full">
       <NavLink
-        to="/home"
+        to="/"
         className={({ isActive }) => (isActive ? "active p-1" : "p-1")}
       >
         Cabin<span className="font-bold">Quest</span>
       </NavLink>
 
       <ul className="flex items-center gap-5">
-        <li>
-          <NavLink
-            to="dashboard"
-            className={({ isActive }) =>
-              `flex justify-center items-center p-2 ${
-                isActive ? "active font-bold" : "inActive"
-              }`
-            }
-          >
-            <span>Dashboard Toggle</span>
-          </NavLink>
-        </li>
         <li>
           <FontAwesomeIcon
             onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -68,7 +56,7 @@ function NavBar() {
                     <span>{userData.name.slice(0, 1)}</span>
                   </div>
                 )}
-                <p>{userData.name}</p>
+                <p className="py-2">{userData.name}</p>
               </div>
             </NavLink>
           ) : (
@@ -84,3 +72,18 @@ function NavBar() {
     </nav>
   );
 }
+
+/*
+<li>
+          <NavLink
+            to="dashboard"
+            className={({ isActive }) =>
+              `flex justify-center items-center p-2 ${
+                isActive ? "active font-bold" : "inActive"
+              }`
+            }
+          >
+            <span>Dashboard Toggle</span>
+          </NavLink>
+        </li>
+*/

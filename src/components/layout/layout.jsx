@@ -1,15 +1,15 @@
 import { Outlet } from "react-router-dom";
-import Header from "./header/header";
-import Footer from "./footer/footer";
+import Header from "../common/header/header";
+import Footer from "../common/footer/footer";
 
 export default function Layout() {
   return (
-    <>
+    <div className="flex flex-col gap-[50px]">
       <Header />
-      <main className="container m-auto">
+      <main>
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

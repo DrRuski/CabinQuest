@@ -1,5 +1,5 @@
-import Form from "../../components/form/form";
-import FormInput from "../../components/form/formInput";
+import Form from "../../components/common/form/form";
+import FormInput from "../../components/common/form/formInput";
 import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
 import { UserContext } from "../../App";

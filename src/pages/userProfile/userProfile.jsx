@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../../App";
 
 export default function UserProfile() {
   const { userData } = useContext(UserContext);

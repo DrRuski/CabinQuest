@@ -3,7 +3,7 @@ import { fetchHeader } from "./fetchHeaders/venueFetchHead";
 import { useLocation, useParams } from "react-router-dom";
 
 export default function useData(userData) {
-  const [venueData, setVenueData] = useState([]);
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const location = useLocation();
@@ -20,8 +20,8 @@ export default function useData(userData) {
           controller
         );
         if (response.ok) {
-          const data = await response.json();
-          setVenueData(data);
+          const fetchedData = await response.json();
+          setData(fetchedData);
         }
       } catch (error) {
         console.error("Network error:", error);
@@ -40,5 +40,5 @@ export default function useData(userData) {
     window.scrollTo(0, 0);
   }, [location]);
 
-  return { venueData, isLoading };
+  return { data, isLoading };
 }
