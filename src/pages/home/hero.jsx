@@ -16,6 +16,10 @@ HeroImageGrid.propTypes = {
   venueData: PropTypes.array,
 };
 
+VenueSearch.propTypes = {
+  venueData: PropTypes.array,
+};
+
 export default function Hero({ venueData }) {
   return (
     <>
@@ -50,7 +54,7 @@ function HeroDescriptionText() {
 function HeroImageGrid({ venueData }) {
   return (
     <ul className="grid grid-cols-3 gap-2 w-[475px]">
-      {venueData?.slice(0, 6).map((image) => (
+      {venueData.slice(0, 6).map((image) => (
         <li key={image.id}>
           <img
             className="aspect-square object-cover rounded shadow"
@@ -63,7 +67,7 @@ function HeroImageGrid({ venueData }) {
   );
 }
 
-function VenueSearch() {
+function VenueSearch({ venueData }) {
   const {
     register,
     handleSubmit,
@@ -72,12 +76,11 @@ function VenueSearch() {
 
   const onSubmit = async (data) => {
     console.log(data);
-
-    try {
-      const response = "yes";
-    } catch (error) {
-      console.error("Network Error:", error);
-    }
+    console.log(venueData);
+    const venueSearch = venueData.filter((venue) => {
+      venue.location.country.toLowerCase().includes(data.country.toLowerCase());
+    });
+    console.log(venueSearch);
   };
   return (
     <Form
@@ -93,7 +96,7 @@ function VenueSearch() {
             placeholder="Where are you going?"
             type="text"
             register={register}
-            name="location"
+            name="country"
             errors={errors}
             required=""
             className="rounded h-8 outline-none"

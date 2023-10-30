@@ -12,15 +12,9 @@ export default function Home({ venueData, isLoading }) {
   document.title = "Home";
 
   return (
-    <section className="flex flex-col gap-16 h-screen">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <Hero venueData={venueData} />
-          <VenueList venueData={venueData} />
-        </>
-      )}
+    <section className="flex flex-col gap-16">
+      <Hero venueData={venueData} isLoading={isLoading} />
+      {isLoading ? <Loader /> : <VenueList venueData={venueData} />}
     </section>
   );
 }
