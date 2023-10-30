@@ -49,7 +49,11 @@ export default function Registration({ setIsOpen }) {
       <h1 className="font-heading text-xl font-semiBold">
         Tell us a bit about yourself.
       </h1>
-      <Form onSubmit={onSubmit} handleSubmit={handleSubmit}>
+      <Form
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
+        className="flex flex-col gap-4"
+      >
         <FormInput
           label="Username"
           type="text"

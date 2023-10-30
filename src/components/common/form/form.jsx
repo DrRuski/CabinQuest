@@ -4,11 +4,12 @@ Form.propTypes = {
   children: PropTypes.node.isRequired,
   onSubmit: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
-export default function Form({ children, onSubmit, handleSubmit }) {
+export default function Form({ children, onSubmit, handleSubmit, className }) {
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className={className} onSubmit={handleSubmit(onSubmit)}>
       {children}
     </form>
   );

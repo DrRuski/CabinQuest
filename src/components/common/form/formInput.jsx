@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 FormInput.propTypes = {
   name: PropTypes.string.isRequired,
   register: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string,
+  labelStyle: PropTypes.string,
+  placeholder: PropTypes.string,
   required: PropTypes.string,
   errors: PropTypes.object,
   minLength: PropTypes.number,
@@ -12,10 +15,14 @@ FormInput.propTypes = {
   patternValue: PropTypes.instanceOf(RegExp),
   patternMessage: PropTypes.string,
   className: PropTypes.string,
+  inputContainerStyle: PropTypes.string,
+  setValueAs: PropTypes.func,
+  icon: PropTypes.object,
 };
 
 export default function FormInput({
   label,
+  labelStyle,
   type = "text",
   name,
   register,
@@ -26,11 +33,19 @@ export default function FormInput({
   patternValue,
   patternMessage,
   className,
+  inputContainerStyle = "flex flex-col gap-1",
+  setValueAs,
+  placeholder,
+  icon,
 }) {
   return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor={name}>{label}</label>
+    <div className={inputContainerStyle}>
+      {icon && <FontAwesomeIcon className="text-accent me-2" icon={icon} />}
+      <label className={labelStyle} htmlFor={name}>
+        {label}
+      </label>
       <input
+        placeholder={placeholder}
         className={className}
         type={type}
         {...register(name, {
@@ -41,6 +56,7 @@ export default function FormInput({
             value: patternValue,
             message: patternMessage,
           },
+          setValueAs: setValueAs,
         })}
       />
       <p className="text-sm text-error">{errors[name]?.message}</p>

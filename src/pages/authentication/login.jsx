@@ -48,7 +48,11 @@ export default function Login() {
       <h1 className="font-heading text-xl font-semiBold">
         Please provide your login details.
       </h1>
-      <Form onSubmit={onSubmit} handleSubmit={handleSubmit}>
+      <Form
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
+        className="flex flex-col gap-4"
+      >
         <FormInput
           label="Email"
           type="email"
