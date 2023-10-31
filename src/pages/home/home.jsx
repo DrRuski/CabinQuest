@@ -8,13 +8,13 @@ Home.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-export default function Home({ venueData, isLoading }) {
+export default function Home({ isLoading }) {
   document.title = "Home";
 
   return (
     <section className="flex flex-col gap-16">
-      <Hero venueData={venueData} isLoading={isLoading} />
-      {isLoading ? <Loader /> : <VenueList venueData={venueData} />}
+      <Hero isLoading={isLoading} />
+      {isLoading ? <Loader /> : <VenueList />}
     </section>
   );
 }

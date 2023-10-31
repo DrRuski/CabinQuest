@@ -1,29 +1,34 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
-import imageNotFound from "../../assets/images/imageNotFound.png";
+import { useContext } from "react";
+import { DataContext } from "../../App";
 
 VenueList.propTypes = {
   venueData: PropTypes.array,
 };
 
-export default function VenueList({ venueData }) {
+VenueItem.propTypes = {
+  venue: PropTypes.object,
+  index: PropTypes.number,
+};
+
+export default function VenueList() {
+  const { data } = useContext(DataContext);
   return (
     <div className="container mx-auto">
-      <ul className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {venueData?.map((venue) => (
-          <Venue key={venue.id} venue={venue} />
+      <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+        {data?.map((venue) => (
+          <VenueItem key={venue.id} venue={venue} />
         ))}
       </ul>
     </div>
   );
 }
 
-Venue.propTypes = {
-  venue: PropTypes.object,
-};
-
-function Venue({ venue }) {
+function VenueItem({ venue }) {
+  const handleImageError = (e) => {
+    e.target.src = "/src/assets/images/imageNotFound.png";
+  };
   const capitalize = (str) => {
     if (!str || typeof str !== "string") {
       return str;
@@ -32,12 +37,16 @@ function Venue({ venue }) {
   };
   return (
     <li>
-      <Link className="flex flex-col shadow rounded text-text border border-background cursor-pointer h-full">
+      <Link
+        to={`venue/${venue.id}`}
+        className="flex flex-col shadow rounded text-text border border-background cursor-pointer h-full"
+      >
         <div>
           <img
-            className="object-cover aspect-square rounded-t"
-            src={venue.media ? venue.media : imageNotFound}
+            className="object-cover aspect-square rounded-t w-full h-full"
+            src={venue.media}
             alt={venue.name}
+            onError={handleImageError}
           />
         </div>
         <div className="flex justify-between">

@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import Form from "../../components/common/form/form";
 import FormInput from "../../components/common/form/formInput";
+import { useContext } from "react";
+import { DataContext } from "../../App";
 import { useForm } from "react-hook-form";
 import {
   faCalendarAlt,
@@ -20,14 +22,14 @@ VenueSearch.propTypes = {
   venueData: PropTypes.array,
 };
 
-export default function Hero({ venueData }) {
+export default function Hero() {
   return (
     <>
       <div className="heroGradient absolute w-full lg:h-[400px] z-0"></div>
-      <div className="container mx-auto flex flex-col gap-[50px] z-50 items-center">
+      <div className="container mx-auto flex flex-col gap-[50px] z-40 items-center">
         <div className="flex items-center justify-between">
           <HeroDescriptionText />
-          <HeroImageGrid venueData={venueData} />
+          <HeroImageGrid />
         </div>
         <VenueSearch />
       </div>
@@ -51,10 +53,11 @@ function HeroDescriptionText() {
   );
 }
 
-function HeroImageGrid({ venueData }) {
+function HeroImageGrid() {
+  const { data } = useContext(DataContext);
   return (
     <ul className="grid grid-cols-3 gap-2 w-[475px]">
-      {venueData.slice(0, 6).map((image) => (
+      {data.slice(0, 6).map((image) => (
         <li key={image.id}>
           <img
             className="aspect-square object-cover rounded shadow"
@@ -67,17 +70,17 @@ function HeroImageGrid({ venueData }) {
   );
 }
 
-function VenueSearch({ venueData }) {
+function VenueSearch() {
+  const { data } = useContext(DataContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    console.log(venueData);
-    const venueSearch = venueData.filter((venue) => {
+  const onSubmit = async (userSearch) => {
+    console.log(userSearch);
+    const venueSearch = data.filter((venue) => {
       venue.location.country.toLowerCase().includes(data.country.toLowerCase());
     });
     console.log(venueSearch);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchHeader } from "./fetchHeaders/venueFetchHead";
 import { useLocation, useParams } from "react-router-dom";
+// import { imageValidation } from "./imageValidation/imageValidation";
 
 export default function useData(userData) {
   const [data, setData] = useState([]);
@@ -21,6 +22,11 @@ export default function useData(userData) {
         );
         if (response.ok) {
           const fetchedData = await response.json();
+          // fetchedData = await imageValidation(
+          //   fetchedData,
+          //   userData.accessToken,
+          //   controller
+          // );
           setData(fetchedData);
         }
       } catch (error) {
