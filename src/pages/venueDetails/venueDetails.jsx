@@ -7,7 +7,13 @@ export default function VenueDetails() {
   const { userData } = useContext(UserContext);
   const { data, isLoading } = useData(userData);
   document.title = `${data.name}`;
-  console.log(data);
+
+  // const getDates = async (data) => {
+  //   await data?.bookings.map((date) => {
+  //     console.log(date.dateFrom);
+  //   });
+  // };
+  // getDates(data);
 
   return (
     <section className="container mx-auto">

@@ -10,12 +10,14 @@ import VenueDetails from "./pages/VenueDetails/venueDetails";
 import VenueManagerDashboard from "./pages/VenueManager/venueManager";
 export const UserContext = createContext([]);
 export const DataContext = createContext([]);
+export const ThemeContext = createContext();
 
 export default function App() {
   const [userData, setUserData] = useLocalStorageState({}, "userProfile");
   const { data, isLoading } = useData(userData);
   const userValue = { userData, setUserData };
   const dataValue = { data };
+
   return (
     <div>
       <UserContext.Provider value={userValue}>

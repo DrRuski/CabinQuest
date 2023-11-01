@@ -18,11 +18,12 @@ FormInput.propTypes = {
   inputContainerStyle: PropTypes.string,
   setValueAs: PropTypes.func,
   icon: PropTypes.object,
+  key: PropTypes.string,
 };
 
 export default function FormInput({
   label,
-  labelStyle,
+  labelStyle = "flex flex-col",
   type = "text",
   name,
   register,
@@ -37,28 +38,31 @@ export default function FormInput({
   setValueAs,
   placeholder,
   icon,
+  key,
 }) {
   return (
-    <div className={inputContainerStyle}>
-      {icon && <FontAwesomeIcon className="text-accent me-2" icon={icon} />}
+    <div key={key} className={inputContainerStyle}>
       <label className={labelStyle} htmlFor={name}>
-        {label}
+        <span>
+          {icon && <FontAwesomeIcon className="text-accent me-2" icon={icon} />}
+          {label}
+        </span>
+        <input
+          placeholder={placeholder}
+          className={className}
+          type={type}
+          {...register(name, {
+            required: required,
+            minLength: minLength,
+            maxLength: maxLength,
+            pattern: {
+              value: patternValue,
+              message: patternMessage,
+            },
+            setValueAs: setValueAs,
+          })}
+        />
       </label>
-      <input
-        placeholder={placeholder}
-        className={className}
-        type={type}
-        {...register(name, {
-          required: required,
-          minLength: minLength,
-          maxLength: maxLength,
-          pattern: {
-            value: patternValue,
-            message: patternMessage,
-          },
-          setValueAs: setValueAs,
-        })}
-      />
       <p className="text-sm text-error">{errors[name]?.message}</p>
     </div>
   );
