@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Form from "../../components/common/form/form";
 import FormInput from "../../components/common/form/formInput";
 import { useContext } from "react";
-import { DataContext } from "../../App";
+import { DataContext } from "../../context/context";
 import { useForm } from "react-hook-form";
 import {
   faCalendarAlt,

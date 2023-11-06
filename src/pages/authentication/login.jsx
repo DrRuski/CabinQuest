@@ -1,16 +1,15 @@
+import { API_BASE_URL } from "../../data/url/url";
 import Form from "../../components/common/form/form";
 import FormInput from "../../components/common/form/formInput";
 import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
-import { UserContext } from "../../App";
-
+import { UserContext } from "../../context/context";
 import { useNavigate } from "react-router-dom";
-import { authFetchHeader } from "../../data/fetchHeaders/authFetchHead";
+import { postData } from "../../data/headers/postData";
 
 export default function Login() {
   const [authenticated, setAuthenticated] = useState(false);
   const { setUserData } = useContext(UserContext);
-  const loginEndpoint = "/holidaze/auth/login";
   const navigate = useNavigate();
 
   const {
@@ -22,7 +21,10 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await authFetchHeader(data, loginEndpoint);
+      const response = await fetch(
+        `${API_BASE_URL}/holidaze/auth/login`,
+        postData(data)
+      );
       if (response.ok) {
         const responseData = await response.json();
         setUserData(responseData);
@@ -40,7 +42,7 @@ export default function Login() {
       console.error("Network error:", error.message);
       throw new Error("Network error:", error.message);
     } finally {
-      navigate("/home");
+      navigate("/");
     }
   };
   return (
@@ -82,7 +84,11 @@ export default function Login() {
         <input
           type="submit"
           value={authenticated ? "Redirecting..." : "Login"}
-          className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-secondary hover:text-text cursor-pointer"
+          className={`rounded  p-2 text-buttonText font-normal   cursor-pointer ${
+            authenticated
+              ? "bg-secondary shadow-lg shadow-primary"
+              : "bg-primary shadow-md hover:bg-secondary hover:text-text"
+          }`}
         />
       </Form>
     </div>

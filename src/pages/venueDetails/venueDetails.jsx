@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "../../App";
+import { UserContext } from "../../context/context";
 import Loader from "../../misc/loader";
 import useData from "../../data/read";
 
@@ -7,6 +7,12 @@ export default function VenueDetails() {
   const { userData } = useContext(UserContext);
   const { data, isLoading } = useData(userData);
   document.title = `${data.name}`;
+
+  console.log(data);
+
+  const handleImageError = (e) => {
+    e.target.src = "/src/assets/images/imageNotFound.png";
+  };
 
   // const getDates = async (data) => {
   //   await data?.bookings.map((date) => {
@@ -22,11 +28,23 @@ export default function VenueDetails() {
       ) : (
         <div className="flex flex-col gap-16 h-screen">
           <h1>{data.name}</h1>
-          <img
-            className="object-fit w-[200px] h-[200px]"
-            src={data.media}
-            alt=""
-          />
+
+          {data.media > 2 ? (
+            <ul>
+              {data.media.map((image, index) => (
+                <li key={index}>
+                  <img src={image} alt="" />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <img
+              className="object-fit w-[200px] h-[200px]"
+              src={data.media}
+              alt=""
+              onError={handleImageError}
+            />
+          )}
         </div>
       )}
     </section>

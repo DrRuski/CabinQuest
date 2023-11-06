@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchHeader } from "./fetchHeaders/venueFetchHead";
+import { getVenues } from "./headers/getVenues";
 import { useLocation, useParams } from "react-router-dom";
 // import { imageValidation } from "./imageValidation/imageValidation";
 
@@ -12,22 +12,16 @@ export default function useData(userData) {
   useEffect(() => {
     const controller = new AbortController();
 
-    async function fetchData() {
+    async function getData() {
       try {
         setIsLoading(true);
-        const response = await fetchHeader(
+        const response = await getVenues(
           userData.accessToken,
           params.id,
           controller
         );
         if (response.ok) {
-          const fetchedData = await response.json();
-          // fetchedData = await imageValidation(
-          //   fetchedData,
-          //   userData.accessToken,
-          //   controller
-          // );
-          setData(fetchedData);
+          setData(await response.json());
         }
       } catch (error) {
         console.error("Network error:", error);
@@ -35,7 +29,7 @@ export default function useData(userData) {
         setIsLoading(false);
       }
     }
-    fetchData();
+    getData();
 
     return function () {
       controller.abort();

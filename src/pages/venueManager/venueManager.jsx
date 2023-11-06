@@ -1,9 +1,11 @@
 import { useContext } from "react";
-import { UserContext } from "../../App";
+import { UserContext } from "../../context/context";
 import Form from "../../components/common/form/form";
-import { useFieldArray, useForm } from "react-hook-form";
-import { createVenueHeader } from "../../data/fetchHeaders/createVenueHead";
+import { useForm } from "react-hook-form";
+
 import FormInput from "../../components/common/form/formInput";
+import { postData } from "../../data/headers/postData";
+import { API_BASE_URL, VENUES_ENDPOINT } from "../../data/url/url";
 
 export default function VenueManagerDashboard() {
   const { userData } = useContext(UserContext);
@@ -13,25 +15,25 @@ export default function VenueManagerDashboard() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-    control,
-  } = useForm();
-
-  const { fields, append, prepend, remove } = useFieldArray({ control });
+  } = useForm({
+    defaultValues: {
+      media: [""],
+    },
+  });
 
   const onSubmit = async (data) => {
     try {
-      const response = await createVenueHeader(data, userData.accessToken);
-
-      console.log(data);
-      if (response.ok) {
-        // return await response.json();
+      const response = await fetch(
+        `${API_BASE_URL}${VENUES_ENDPOINT}`,
+        postData(data, userData.accessToken)
+      );
+      if (!response.ok) {
+        console.log(response);
+        return;
       }
+      return await response.json();
     } catch (error) {
-      console.error("Network error:", error.message);
-      throw new Error("Network error:", error.message);
-    } finally {
-      reset();
+      console.error(error);
     }
   };
 
@@ -61,49 +63,33 @@ export default function VenueManagerDashboard() {
             className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
           />
 
-          {fields.map((field, index) => {
-            console.log(field);
-            return (
-              <FormInput
-                key={field.id}
-                label="Media"
-                type="text"
-                register={register}
-                name={`media.${index}`}
-                errors={errors}
-                className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
-              />
-            );
-          })}
-          <div className="flex gap-10">
-            <button
-              type="button"
-              onClick={() => {
-                append({ name: "Media" });
-              }}
-              className="shadow-md rounded bg-secondary p-2 text-text font-semiBold hover:bg-accent hover:text-text cursor-pointer"
-            >
-              Append
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                prepend({ name: "Media" });
-              }}
-              className="shadow-md rounded bg-secondary p-2 text-text font-semiBold hover:bg-accent hover:text-text cursor-pointer"
-            >
-              Prepend
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                remove();
-              }}
-              className="shadow-md rounded bg-secondary p-2 text-text font-semiBold hover:bg-accent hover:text-text cursor-pointer"
-            >
-              Remove
-            </button>
-          </div>
+          <FormInput
+            label="Price"
+            type="number"
+            register={register}
+            name="price"
+            errors={errors}
+            setValueAs={(value) => parseInt(value)}
+            className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
+          />
+          <FormInput
+            label="Allowed Amount of Guests"
+            type="number"
+            register={register}
+            name="maxGuests"
+            errors={errors}
+            setValueAs={(value) => parseInt(value)}
+            className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
+          />
+
+          <FormInput
+            label="Media"
+            type="text"
+            register={register}
+            name="media.0"
+            errors={errors}
+            className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
+          />
 
           <input
             type="submit"

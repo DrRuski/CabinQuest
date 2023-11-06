@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 FormInput.propTypes = {
+  children: PropTypes.node,
   name: PropTypes.string.isRequired,
   register: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
@@ -18,12 +19,13 @@ FormInput.propTypes = {
   inputContainerStyle: PropTypes.string,
   setValueAs: PropTypes.func,
   icon: PropTypes.object,
-  key: PropTypes.string,
+  idKey: PropTypes.string,
 };
 
 export default function FormInput({
+  children,
   label,
-  labelStyle = "flex flex-col",
+  labelStyle,
   type = "text",
   name,
   register,
@@ -38,32 +40,34 @@ export default function FormInput({
   setValueAs,
   placeholder,
   icon,
-  key,
+  idKey,
 }) {
   return (
-    <div key={key} className={inputContainerStyle}>
+    <div key={idKey} className={inputContainerStyle}>
       <label className={labelStyle} htmlFor={name}>
         <span>
           {icon && <FontAwesomeIcon className="text-accent me-2" icon={icon} />}
           {label}
         </span>
-        <input
-          placeholder={placeholder}
-          className={className}
-          type={type}
-          {...register(name, {
-            required: required,
-            minLength: minLength,
-            maxLength: maxLength,
-            pattern: {
-              value: patternValue,
-              message: patternMessage,
-            },
-            setValueAs: setValueAs,
-          })}
-        />
       </label>
-      <p className="text-sm text-error">{errors[name]?.message}</p>
+      <input
+        placeholder={placeholder}
+        className={className}
+        type={type}
+        {...register(name, {
+          required: required,
+          minLength: minLength,
+          maxLength: maxLength,
+          pattern: {
+            value: patternValue,
+            message: patternMessage,
+          },
+
+          setValueAs: setValueAs,
+        })}
+      />
+      <span className="text-sm text-error">{errors[name]?.message}</span>
+      {children && <div>{children}</div>}
     </div>
   );
 }

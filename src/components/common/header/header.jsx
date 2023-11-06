@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useContext, useState } from "react";
-import { UserContext } from "../../../App";
+import { UserContext } from "../../../context/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 
@@ -37,7 +37,7 @@ function NavBar() {
           />
         </li>
         <li>
-          {userData ? (
+          {userData.name ? (
             <NavLink
               to={userData ? `user/${userData.name}` : "user/Guest"}
               className={({ isActive }) =>

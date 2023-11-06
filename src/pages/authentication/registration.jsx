@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../../components/common/form/form";
 import FormInput from "../../components/common/form/formInput";
-import { authFetchHeader } from "../../data/fetchHeaders/authFetchHead";
 import PropTypes from "prop-types";
+import { API_BASE_URL } from "../../data/url/url";
+import { postData } from "../../data/headers/postData";
 
 Registration.propTypes = {
   setIsOpen: PropTypes.func.isRequired,
@@ -11,7 +12,6 @@ Registration.propTypes = {
 
 export default function Registration({ setIsOpen }) {
   const [authenticated, setAuthenticated] = useState(false);
-  const registerEndpoint = "/holidaze/auth/register";
 
   const {
     register,
@@ -22,9 +22,19 @@ export default function Registration({ setIsOpen }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await authFetchHeader(data, registerEndpoint);
+      const response = await fetch(
+        `${API_BASE_URL}/holidaze/auth/register`,
+        postData(data)
+      );
 
       if (response.ok) {
+        console.log(response);
+        setAuthenticated(true);
+        reset();
+        setTimeout(() => {
+          setAuthenticated(false);
+          setIsOpen(true);
+        }, 3000);
         return await response.json();
       } else {
         const errorData = await response.json();
@@ -34,13 +44,6 @@ export default function Registration({ setIsOpen }) {
     } catch (error) {
       console.error("Network error:", error.message);
       throw new Error("Network error:", error.message);
-    } finally {
-      setAuthenticated(true);
-      reset();
-      setTimeout(() => {
-        setAuthenticated(false);
-        setIsOpen(true);
-      }, 3000);
     }
   };
 
@@ -86,7 +89,11 @@ export default function Registration({ setIsOpen }) {
         <input
           type="submit"
           value={authenticated ? "Creating Account..." : "Create Account"}
-          className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-secondary hover:text-text cursor-pointer"
+          className={`rounded  p-2 text-buttonText font-normal   cursor-pointer ${
+            authenticated
+              ? "bg-secondary shadow-lg shadow-primary"
+              : "bg-primary shadow-md hover:bg-secondary hover:text-text"
+          }`}
         />
       </Form>
     </div>

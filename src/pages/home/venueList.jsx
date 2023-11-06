@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { DataContext } from "../../App";
+import { DataContext } from "../../context/context";
 
 VenueList.propTypes = {
   venueData: PropTypes.array,
@@ -44,7 +44,11 @@ function VenueItem({ venue }) {
         <div>
           <img
             className="object-cover aspect-square rounded-t w-full h-full"
-            src={venue.media}
+            src={
+              venue.media
+                ? venue.media[0]
+                : "/src/assets/images/imageNotFound.png"
+            }
             alt={venue.name}
             onError={handleImageError}
           />
