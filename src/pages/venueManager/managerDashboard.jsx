@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/context";
-import CreateVenueForm from "./createVenue";
+import CreateVenueForm from "./createVenue/createVenue";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
