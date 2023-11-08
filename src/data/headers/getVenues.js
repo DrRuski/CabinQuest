@@ -5,7 +5,7 @@ import {
   VENUE_LIMITER,
 } from "../url/url";
 
-export const getVenues = async (token, id, controller) => {
+export const getVenues = async (id, controller) => {
   if (id) {
     // If ID exists, uses this header to fetch single item from the list. (Used on Venue Details page)
     return await fetch(

@@ -6,7 +6,7 @@ import { useLocalStorageState } from "./misc/localStorage";
 import Home from "./pages/home/home";
 import UserProfile from "./pages/UserProfile/userProfile";
 import VenueDetails from "./pages/VenueDetails/venueDetails";
-import VenueManagerDashboard from "./pages/VenueManager/venueManager";
+import ManagerDashboard from "./pages/venueManager/managerDashboard";
 import { DataContext, UserContext } from "./context/context";
 
 export default function App() {
@@ -35,10 +35,7 @@ export default function App() {
                 path="venue/:id"
                 element={<VenueDetails data={data} />}
               ></Route>
-              <Route
-                path="dashboard"
-                element={<VenueManagerDashboard />}
-              ></Route>
+              <Route path="dashboard" element={<ManagerDashboard />}></Route>
             </Route>
           </Routes>
         </DataContext.Provider>

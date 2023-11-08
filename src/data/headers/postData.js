@@ -1,6 +1,6 @@
 export const postData = (data, token) => {
   if (token) {
-    // Header for logged in users who want to create a new venue. (Used in Venue Manager page)
+    // Header to log in users who already have a registered account and for managers to create a new venue. (Used in login.jsx and createVenue.jsx)
     return {
       method: "POST",
       headers: {

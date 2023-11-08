@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { getVenues } from "./headers/getVenues";
 import { useLocation, useParams } from "react-router-dom";
-// import { imageValidation } from "./imageValidation/imageValidation";
 
-export default function useData(userData) {
+export default function useData() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
@@ -15,11 +14,7 @@ export default function useData(userData) {
     async function getData() {
       try {
         setIsLoading(true);
-        const response = await getVenues(
-          userData.accessToken,
-          params.id,
-          controller
-        );
+        const response = await getVenues(params.id, controller);
         if (response.ok) {
           setData(await response.json());
         }
@@ -34,7 +29,7 @@ export default function useData(userData) {
     return function () {
       controller.abort();
     };
-  }, [userData.accessToken, params.id]);
+  }, [params.id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
