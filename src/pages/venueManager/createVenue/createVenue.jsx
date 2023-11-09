@@ -29,6 +29,7 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm({
     defaultValues: {
       media: [""],
@@ -42,16 +43,17 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
         `${API_BASE_URL}${VENUES_ENDPOINT}`,
         postData(data, userData.accessToken)
       );
-      if (!response.ok) {
+      if (response.ok) {
+        reset();
+        setIsOpen(false);
+        return await response.json();
+      } else {
         console.log(response);
         throw new Error("Error Description", response.message);
       }
-      return await response.json();
     } catch (error) {
       console.error(error);
       throw new Error("Error Description", error);
-    } finally {
-      setIsOpen(false);
     }
   };
 
@@ -59,7 +61,9 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
     <div className="m-auto rounded bg-background shadow-lg lg:w-[650px] p-5 z-50">
       <div className="flex flex-col gap-3">
         <div className="flex justify-between">
-          <h3 className="font-heading md:text-2xl">Create new venue</h3>
+          <h3 className="font-heading md:text-2xl font-bold">
+            Create new venue
+          </h3>
           <button onClick={() => setIsOpen((open) => !open)}>❌</button>
         </div>
         <hr className="opacity-20" />
@@ -79,10 +83,10 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
               <h3 className="text-buttonText font-semiBold text-xl">1</h3>
             </li>
             <div
-              className={`w-10 h-2 rounded opacity-25 ${
+              className={`w-10 h-1 rounded ${
                 currentPage === 2 || currentPage === 3
                   ? "bg-accent opacity-100"
-                  : "bg-text"
+                  : "bg-text opacity-25"
               }`}
             ></div>
             <li
@@ -93,18 +97,20 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
               }`}
             >
               <h3
-                className={`font-semiBold opacity-25 text-xl ${
+                className={`font-semiBold text-xl ${
                   currentPage === 2 || currentPage === 3
                     ? "text-buttonText opacity-100"
-                    : "text-text"
+                    : "opacity-25 text-text"
                 }`}
               >
                 2
               </h3>
             </li>
             <div
-              className={`w-10 h-2 rounded opacity-25 ${
-                currentPage === 3 ? "bg-accent opacity-100" : "bg-text"
+              className={`w-10 h-1 rounded ${
+                currentPage === 3
+                  ? "bg-accent opacity-100"
+                  : "bg-text opacity-25"
               }`}
             ></div>
             <li
@@ -113,10 +119,10 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
               }`}
             >
               <h3
-                className={`font-semiBold opacity-25 text-xl ${
+                className={`font-semiBold text-xl ${
                   currentPage === 3
                     ? "text-buttonText opacity-100"
-                    : "text-text"
+                    : "text-text opacity-25"
                 }`}
               >
                 3

@@ -12,13 +12,17 @@ FormPageOThree.propTypes = {
 export default function FormPageOThree({ register, errors, control }) {
   return (
     <>
+      <h3 className="font-heading font-semiBold text-xl text-center">
+        Venue Location Details
+      </h3>
       <FormInput
         label="Street Address"
         type="text"
         register={register}
         name="address"
         errors={errors}
-        className="ps-2 rounded shadow-md h-8 outline-none outline-1 focus:shadow-md focus:shadow-primary hover:shadow-primary"
+        className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
+        labelStyle="font-semiBold"
       />
       <FormInput
         label="City"
@@ -26,7 +30,8 @@ export default function FormPageOThree({ register, errors, control }) {
         register={register}
         name="city"
         errors={errors}
-        className="ps-2 rounded shadow-md h-8 outline-none outline-1 focus:shadow-md focus:shadow-primary hover:shadow-primary"
+        className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
+        labelStyle="font-semiBold"
       />
       <FormInput
         label="Zip"
@@ -34,15 +39,16 @@ export default function FormPageOThree({ register, errors, control }) {
         register={register}
         name="zip"
         errors={errors}
-        className="ps-2 rounded shadow-md h-8 outline-none outline-1 focus:shadow-md focus:shadow-primary hover:shadow-primary"
+        className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
+        labelStyle="font-semiBold"
       />
       <Controller
         name="country"
         render={({ field: { name, onChange, value } }) => (
           <div className="flex flex-col gap-1">
-            <label>Country</label>
+            <label className="font-semiBold">Country</label>
             <CountryDropdown
-              classes="ps-2 rounded shadow-md h-8 outline-none outline-1 focus:shadow-md focus:shadow-primary hover:shadow-primary"
+              classes="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
               defaultOptionLabel="Select Country"
               name={name}
               value={value}
@@ -55,7 +61,7 @@ export default function FormPageOThree({ register, errors, control }) {
 
       <input
         type="submit"
-        value="Create Venue"
+        value="Publish Venue"
         className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-accent hover:text-text hover:font-semiBold cursor-pointer"
       />
     </>

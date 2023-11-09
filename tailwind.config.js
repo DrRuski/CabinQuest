@@ -9,6 +9,7 @@ export default {
       primary: "var(--primary)",
       secondary: "var(--secondary)",
       accent: "var(--accent)",
+      border: "#aaa",
       buttonText: "#fdfefb",
       link: "#362FD9",
       warning: "#FFA559",

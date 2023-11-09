@@ -1,8 +1,12 @@
+import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../context/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import SignInButton from "./signInButton";
+import UserAvatar from "./userAvatar";
 
 export default function Header() {
   return (
@@ -13,63 +17,84 @@ export default function Header() {
 }
 
 function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenBell, setIsOpenBell] = useState(false);
+  const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const { userData } = useContext(UserContext);
   return (
     <nav className="container mx-auto flex flex-col items-center gap-4 md:flex-row md:justify-between h-full">
-      <NavLink
-        to="/"
-        className={({ isActive }) => (isActive ? "active p-1" : "p-1")}
-      >
-        Cabin<span className="font-bold">Quest</span>
-      </NavLink>
+      <div className="cursor-pointer p-2 rounded hover:shadow-md hover:text-accent">
+        <NavLink to="/">
+          Cabin<span className="font-bold">Quest</span>
+        </NavLink>
+      </div>
 
-      <ul className="flex items-center gap-5">
-        <li>
-          <FontAwesomeIcon
-            onClick={() => setIsOpen((isOpen) => !isOpen)}
-            type="button"
-            className={`flex justify-center items-center p-2 cursor-pointer rounded ${
-              isOpen ? "active shadow" : "inActive hover:shadow"
-            }`}
-            icon={faBell}
-            size="lg"
-          />
-        </li>
-        <li>
-          {userData.name ? (
-            <NavLink
-              to={userData ? `user/${userData.name}` : "user/Guest"}
-              className={({ isActive }) =>
-                isActive ? "active font-bold" : "inActive"
-              }
-            >
-              <div className="flex items-center gap-2">
-                {userData.avatar ? (
-                  <img
-                    className="object-cover w-full h-full rounded-full shadow"
-                    src={userData.avatar}
-                    alt={userData.name}
-                  />
-                ) : (
-                  <div className="flex justify-center items-center bg-primary h-9 w-9 text-buttonText shadow rounded-full">
-                    <span>{userData.name.slice(0, 1)}</span>
-                  </div>
-                )}
-                <p className="py-2">{userData.name}</p>
+      <div className="flex gap-7">
+        {userData.name ? (
+          <>
+            <button>
+              <FontAwesomeIcon
+                onClick={() => setIsOpenBell((isOpen) => !isOpen)}
+                type="button"
+                className={`flex justify-center items-center p-2 cursor-pointer rounded ${
+                  isOpenBell
+                    ? "text-primary shadow"
+                    : "text-secondary hover:text-accent hover:shadow"
+                }`}
+                icon={faBell}
+                size="lg"
+              />
+            </button>
+
+            <div className="flex flex-col items-end">
+              <UserAvatar
+                userData={userData}
+                setIsOpenDropDown={setIsOpenDropDown}
+              />
+              <div
+                className={`${isOpenDropDown ? "activeMenu" : "inActiveMenu"}`}
+              >
+                <ul className="flex flex-col p-4 shadow-md">
+                  <DropdownItem userData={userData} icon={faUser} size="sm" />
+                </ul>
               </div>
-            </NavLink>
-          ) : (
-            <NavLink
-              to="login"
-              className={`flex justify-center items-center py-2 px-7 rounded bg-primary shadow text-buttonText font-bold hover:bg-accent hover:text-text`}
-            >
-              <span>Sign Up</span>
-            </NavLink>
-          )}
-        </li>
-      </ul>
+            </div>
+          </>
+        ) : (
+          <SignInButton />
+        )}
+      </div>
     </nav>
+  );
+}
+
+DropdownItem.propTypes = {
+  userData: PropTypes.object,
+  icon: PropTypes.object,
+  size: PropTypes.string,
+};
+
+function DropdownItem({ userData, icon, size }) {
+  return (
+    <>
+      <li className="flex gap-2 items-center">
+        <FontAwesomeIcon size={size} icon={icon} />
+        <NavLink
+          to={`user/${userData.name}`}
+          className={({ isActive }) => (isActive ? "font-bold" : "")}
+        >
+          <span>Edit Profile</span>
+        </NavLink>
+      </li>
+      <li className="flex gap-2 items-center">
+        <FontAwesomeIcon size={size} icon={icon} />
+        <NavLink
+          to="dashboard"
+          className={({ isActive }) => (isActive ? "font-bold" : "")}
+        >
+          <span>Dashboard</span>
+        </NavLink>
+      </li>
+    </>
   );
 }
 
