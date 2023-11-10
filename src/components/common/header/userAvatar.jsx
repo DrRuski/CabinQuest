@@ -18,8 +18,13 @@ export default function UserAvatar({ userData, setIsOpenDropDown }) {
           alt={userData.name}
         />
       ) : (
-        <div className="flex justify-center items-center h-10 w-10 bg-primary text-buttonText font-bold rounded shadow-md hover:bg-accent">
-          <p>{userData.name.slice(0, 1)}</p>
+        <div className="flex justify-center items-center p-1 hover:shadow-md rounded">
+          <button
+            type="button"
+            className="h-10 w-10 bg-primary text-buttonText font-bold rounded hover:bg-accent"
+          >
+            {userData.name.slice(0, 1)}
+          </button>
         </div>
       )}
     </div>

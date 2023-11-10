@@ -3,7 +3,12 @@ import { NavLink } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../context/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBell,
+  faDashboard,
+  faEdit,
+  faSignOut,
+} from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import SignInButton from "./signInButton";
 import UserAvatar from "./userAvatar";
@@ -21,7 +26,7 @@ function NavBar() {
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const { userData } = useContext(UserContext);
   return (
-    <nav className="container mx-auto flex flex-col items-center gap-4 md:flex-row md:justify-between h-full">
+    <nav className="container mx-auto flex items-center gap-4 justify-between h-full">
       <div className="cursor-pointer p-2 rounded hover:shadow-md hover:text-accent">
         <NavLink to="/">
           Cabin<span className="font-bold">Quest</span>
@@ -45,18 +50,40 @@ function NavBar() {
               />
             </button>
 
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col items-end relative">
               <UserAvatar
                 userData={userData}
                 setIsOpenDropDown={setIsOpenDropDown}
               />
-              <div
-                className={`${isOpenDropDown ? "activeMenu" : "inActiveMenu"}`}
-              >
-                <ul className="flex flex-col p-4 shadow-md">
-                  <DropdownItem userData={userData} icon={faUser} size="sm" />
-                </ul>
-              </div>
+              {isOpenDropDown && (
+                <div className="flex flex-col gap-10 items-center px-3 py-5 rounded bg-background absolute top-14 lg:w-[200px] shadow-md">
+                  <h3 className="font-semiBold">{userData.name}</h3>
+                  <ul className="flex flex-col items-start gap-5">
+                    <DropdownItem
+                      text="My Profile"
+                      userData={userData}
+                      icon={faUser}
+                      location={`user/${userData.name}`}
+                    />
+                    <DropdownItem
+                      text="Edit Profile"
+                      userData={userData}
+                      icon={faEdit}
+                      location={`user/${userData.name}`}
+                    />
+                    <DropdownItem
+                      text="Dashboard"
+                      icon={faDashboard}
+                      location="dashboard"
+                    />
+                    <DropdownItem
+                      text="Logout"
+                      icon={faSignOut}
+                      location="login"
+                    />
+                  </ul>
+                </div>
+              )}
             </div>
           </>
         ) : (
@@ -68,33 +95,20 @@ function NavBar() {
 }
 
 DropdownItem.propTypes = {
-  userData: PropTypes.object,
   icon: PropTypes.object,
   size: PropTypes.string,
+  location: PropTypes.string,
+  text: PropTypes.string,
 };
 
-function DropdownItem({ userData, icon, size }) {
+function DropdownItem({ location, text, icon, size = "md" }) {
   return (
-    <>
-      <li className="flex gap-2 items-center">
-        <FontAwesomeIcon size={size} icon={icon} />
-        <NavLink
-          to={`user/${userData.name}`}
-          className={({ isActive }) => (isActive ? "font-bold" : "")}
-        >
-          <span>Edit Profile</span>
-        </NavLink>
-      </li>
-      <li className="flex gap-2 items-center">
-        <FontAwesomeIcon size={size} icon={icon} />
-        <NavLink
-          to="dashboard"
-          className={({ isActive }) => (isActive ? "font-bold" : "")}
-        >
-          <span>Dashboard</span>
-        </NavLink>
-      </li>
-    </>
+    <li className="flex gap-2 items-center p-2 rounded hover:shadow-md w-full hover:bg-secondary">
+      <FontAwesomeIcon size={size} icon={icon} />
+      <NavLink to={location}>
+        <span>{text}</span>
+      </NavLink>
+    </li>
   );
 }
 

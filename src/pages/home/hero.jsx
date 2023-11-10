@@ -26,12 +26,12 @@ export default function Hero() {
   return (
     <>
       <div className="heroGradient absolute w-full lg:h-[400px] z-0"></div>
-      <div className="container mx-auto flex flex-col gap-[50px] z-40 items-center">
-        <div className="flex items-center justify-between">
+      <div className="container mx-auto px-1 flex flex-col gap-[50px] z-40 items-center">
+        <div className="flex flex-col-reverse items-center md:flex-row md:justify-between">
           <HeroDescriptionText />
           <HeroImageGrid />
         </div>
-        <VenueSearch />
+        {/* <VenueSearch /> */}
       </div>
     </>
   );
@@ -56,7 +56,7 @@ function HeroDescriptionText() {
 function HeroImageGrid() {
   const { data } = useContext(DataContext);
   return (
-    <ul className="grid grid-cols-3 gap-2 w-[475px]">
+    <ul className="grid grid-cols-3 gap-2 md:w-[475px]">
       {data.slice(0, 6).map((image) => (
         <li key={image.id}>
           <img
