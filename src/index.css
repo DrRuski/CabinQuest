@@ -13,6 +13,7 @@ body {
         --primary: #386520;
         --secondary: #c1ebc8;
         --accent: #36ab47;
+        --border: var(--border)
     }
 
     .dark {
@@ -26,17 +27,16 @@ body {
 
 
 /* NavLink */
-.active {
-    color: var(--primary);
+#dropdown .active {
+    background-color: var(--accent);
+    color: #ffffff;
 }
 
-.inActive {
-    color: var(--secondary);
+#dropdown .active:hover {
+    background-color: var(--secondary);
+    color: var(--text);
 }
 
-.inActive:hover {
-    color: var(--accent);
-}
 
 /* Hero Gradient */
 .heroGradient {

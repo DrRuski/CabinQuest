@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Form from "../../components/common/form/form";
 import FormInput from "../../components/common/form/formInput";
 import { useContext } from "react";
-import { DataContext } from "../../context/context";
+import { DataContext, UserContext } from "../../context/context";
 import { useForm } from "react-hook-form";
 import {
   faCalendarAlt,
@@ -25,7 +25,7 @@ VenueSearch.propTypes = {
 export default function Hero() {
   return (
     <>
-      <div className="heroGradient absolute w-full lg:h-[400px] z-0"></div>
+      {/* <div className="heroGradient absolute w-full lg:h-[400px] z-0"></div> */}
       <div className="container mx-auto px-1 flex flex-col gap-[50px] z-40 items-center">
         <div className="flex flex-col-reverse items-center md:flex-row md:justify-between">
           <HeroDescriptionText />
@@ -38,17 +38,44 @@ export default function Hero() {
 }
 
 function HeroDescriptionText() {
+  const { userData } = useContext(UserContext);
+
+  function greetingMessage() {
+    const currentHour = new Date().getHours();
+    let greeting;
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = `Good morning ${userData.name}`;
+    } else if (currentHour >= 12 && currentHour < 18) {
+      greeting = `Good day ${userData.name}`;
+    } else {
+      greeting = `Good evening ${userData.name}`;
+    }
+
+    return greeting;
+  }
+
   return (
-    <div className="flex flex-col md:w-[475px]">
-      <h1 className="font-heading font-bold text-4xl">
-        Pristine, quite and peaceful.
-      </h1>
-      <p>
-        Antepuska relölig. Ede aväv. Sonade pogåpägon bejånar. Kroliga. Spenihet
-        ar. Konnetik. Geofans besam, agnostisofi. Sest kror utan löluska. Plaras
-        anteska ifall egost. Kad peda. Egånt osa inte växtbaserat kött. Poledes
-        dilire och glokal.
-      </p>
+    <div className="flex flex-col flex-1">
+      <h1 className="font-heading font-bold text-4xl">{greetingMessage()}</h1>
+      {userData.name ? (
+        <p>
+          It's wonderful to see you back at CabinQuest. Your last adventure
+          awaits its sequel, and we're here to help script it. Have you dreamt
+          of a new horizon, or is there a beloved spot you're yearning to
+          revisit?
+        </p>
+      ) : (
+        <p>
+          Welcome to CabinQuest, where every stay is an unforgettable chapter in
+          your travel story. Escape the ordinary and immerse yourself in the
+          extraordinary — from rustic retreats nestled in whispering woods to
+          modern havens perched by serene lakes. Here, every cabin is more than
+          just a place to sleep; it's a space to dream, to connect, and to savor
+          the simplicity of nature. So whether you're seeking solitude,
+          adventure, or a cozy corner to make memories with loved ones, start
+          your quest with us. Your sanctuary in the wild awaits!
+        </p>
+      )}
     </div>
   );
 }
@@ -56,7 +83,7 @@ function HeroDescriptionText() {
 function HeroImageGrid() {
   const { data } = useContext(DataContext);
   return (
-    <ul className="grid grid-cols-3 gap-2 md:w-[475px]">
+    <ul className="grid grid-cols-3 gap-2 flex-1">
       {data.slice(0, 6).map((image) => (
         <li key={image.id}>
           <img
