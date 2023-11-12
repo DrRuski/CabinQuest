@@ -12,14 +12,16 @@ export default function ManagerDashboard() {
 
   return (
     <section className="container mx-auto px-1 h-full">
-      <div className="">
+      <div>
         <button
           type="button"
-          className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-accent hover:text-text hover:font-semiBold cursor-pointer"
+          className={`flex justify-center items-center gap-2 shadow-md rounded p-3 text-buttonText hover:bg-accent ${
+            isOpen ? "bg-accent" : "bg-primary"
+          }`}
           onClick={() => setIsOpen((open) => !open)}
         >
-          <FontAwesomeIcon icon={faPlus} />{" "}
-          <span className="ms-1">Create New Venue</span>
+          <FontAwesomeIcon icon={faPlus} />
+          <p>Create New Venue</p>
         </button>
       </div>
       {isOpen && <CreateVenueForm userData={userData} setIsOpen={setIsOpen} />}

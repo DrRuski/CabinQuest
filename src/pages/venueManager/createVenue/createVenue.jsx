@@ -155,19 +155,19 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
               <button
                 onClick={() => setCurrentPage(currentPage - 1)}
                 type="button"
-                className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-accent hover:text-text hover:font-semiBold cursor-pointer"
+                className="flex justify-center items-center gap-3 shadow-md rounded bg-primary p-3 text-buttonText hover:bg-accent"
               >
                 <FontAwesomeIcon icon={faArrowLeftLong} />
-                <span className="ms-1">Back</span>{" "}
+                <p>Back</p>
               </button>
             )}
             {currentPage !== 3 && (
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 type="button"
-                className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-accent hover:text-text hover:font-semiBold cursor-pointer"
+                className="flex justify-center items-center gap-3 shadow-md rounded bg-primary p-3 text-buttonText hover:bg-accent"
               >
-                <span className="me-1">Next</span>{" "}
+                <p>Next</p>
                 <FontAwesomeIcon icon={faArrowRightLong} />
               </button>
             )}

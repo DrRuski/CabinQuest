@@ -12,7 +12,7 @@ export default function Home({ isLoading }) {
   document.title = "Home";
 
   return (
-    <section className="flex flex-col gap-16">
+    <section className="flex flex-col">
       <Hero isLoading={isLoading} />
       {isLoading ? <Loader /> : <VenueList />}
     </section>

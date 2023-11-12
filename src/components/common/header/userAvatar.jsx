@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 UserAvatar.propTypes = {
   userData: PropTypes.object,
   setIsOpenDropDown: PropTypes.func,
+  isOpenDropDown: PropTypes.func,
 };
 
-export default function UserAvatar({ userData, setIsOpenDropDown }) {
+export default function UserAvatar({
+  userData,
+  isOpenDropDown,
+  setIsOpenDropDown,
+}) {
   return (
     <>
       {userData.avatar ? (
@@ -23,7 +28,9 @@ export default function UserAvatar({ userData, setIsOpenDropDown }) {
       ) : (
         <button
           type="button"
-          className="p-1 h-10 w-10 bg-primary text-buttonText font-bold rounded hover:bg-accent hover:shadow-md"
+          className={`p-1 h-10 w-10 text-buttonText font-bold rounded hover:bg-accent hover:shadow-md ${
+            isOpenDropDown ? "bg-accent shadow-md" : "bg-primary"
+          }`}
           onClick={() => setIsOpenDropDown((open) => !open)}
         >
           {userData.name.slice(0, 1)}

@@ -71,6 +71,7 @@ function NavBar() {
               <UserAvatar
                 userData={userData}
                 setIsOpenDropDown={setIsOpenDropDown}
+                isOpenDropDown={isOpenDropDown}
               />
               {isOpenDropDown && (
                 <div className="flex flex-col gap-10 px-3 py-5 rounded bg-background absolute top-11 lg:w-[200px] shadow-md border border-opacity-30 border-border">

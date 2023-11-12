@@ -27,9 +27,9 @@ export default function Hero() {
     <>
       {/* <div className="heroGradient absolute w-full lg:h-[400px] z-0"></div> */}
       <div className="container mx-auto px-1 flex flex-col gap-[50px] z-40 items-center">
-        <div className="flex flex-col-reverse items-center md:flex-row md:justify-between">
-          <HeroDescriptionText />
-          <HeroImageGrid />
+        <div className="flex flex-col items-center w-[800px]">
+          {/* <HeroDescriptionText /> */}
+          {/* <HeroImageGrid /> */}
         </div>
         {/* <VenueSearch /> */}
       </div>
@@ -56,22 +56,24 @@ function HeroDescriptionText() {
 
   return (
     <div className="flex flex-col flex-1">
-      <h1 className="font-heading font-bold text-4xl">{greetingMessage()}</h1>
+      <h1 className="font-heading font-bold text-4xl text-center">
+        {greetingMessage()}
+      </h1>
       {userData.name ? (
-        <p>
-          It's wonderful to see you back at CabinQuest. Your last adventure
-          awaits its sequel, and we're here to help script it. Have you dreamt
-          of a new horizon, or is there a beloved spot you're yearning to
+        <h2 className="font-heading font-bold text-xl text-center">
+          It is wonderful to see you back at CabinQuest. Your last adventure
+          awaits its sequel, and we are here to help script it. Have you dreamt
+          of a new horizon, or is there a beloved spot you are yearning to
           revisit?
-        </p>
+        </h2>
       ) : (
         <p>
           Welcome to CabinQuest, where every stay is an unforgettable chapter in
           your travel story. Escape the ordinary and immerse yourself in the
           extraordinary — from rustic retreats nestled in whispering woods to
           modern havens perched by serene lakes. Here, every cabin is more than
-          just a place to sleep; it's a space to dream, to connect, and to savor
-          the simplicity of nature. So whether you're seeking solitude,
+          just a place to sleep; it is a space to dream, to connect, and to
+          savor the simplicity of nature. So whether you are seeking solitude,
           adventure, or a cozy corner to make memories with loved ones, start
           your quest with us. Your sanctuary in the wild awaits!
         </p>
