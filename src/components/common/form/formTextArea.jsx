@@ -55,6 +55,7 @@ export default function FormTextArea({
         </span>
       </label>
       <textarea
+        id={name}
         rows={rows}
         cols={cols}
         placeholder={placeholder}

@@ -32,11 +32,6 @@ body {
     color: #ffffff;
 }
 
-#dropdown .active:hover {
-    background-color: var(--secondary);
-    color: var(--text);
-}
-
 
 /* Hero Gradient */
 .heroGradient {

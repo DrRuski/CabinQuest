@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 UserAvatar.propTypes = {
   userData: PropTypes.object,
   setIsOpenDropDown: PropTypes.func,
-  isOpenDropDown: PropTypes.func,
+  isOpenDropDown: PropTypes.bool,
 };
 
 export default function UserAvatar({

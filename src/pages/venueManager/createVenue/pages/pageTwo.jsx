@@ -1,18 +1,23 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 import FormInput from "../../../../components/common/form/formInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 FormPageOTwo.propTypes = {
   register: PropTypes.func,
   errors: PropTypes.object,
+  fields: PropTypes.array,
+  append: PropTypes.func,
+  remove: PropTypes.func,
 };
 
-export default function FormPageOTwo({ register, errors }) {
-  const [mediaTwo, setMediaTwo] = useState(false);
-  const [mediaThree, setMediaThree] = useState(false);
-
+export default function FormPageOTwo({
+  register,
+  errors,
+  fields,
+  remove,
+  append,
+}) {
   return (
     <>
       <h3 className="font-heading font-semiBold text-xl text-center">
@@ -61,67 +66,47 @@ export default function FormPageOTwo({ register, errors }) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <FormInput
-          label="Media - #1"
-          type="text"
-          register={register}
-          name="media.0"
-          errors={errors}
-          className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
-          labelStyle="font-semiBold"
-        />
+      <ul className="flex flex-col">
+        {fields.map((field, index) => {
+          return (
+            <li className="flex flex-col gap-1" key={field.id}>
+              <label className="font-semiBold">
+                <span>Media #{index + 1}</span>
+              </label>
+              <div className="flex justify-between items-center gap-2">
+                <input
+                  key={field.id}
+                  type="url"
+                  {...register(`media.${index}`)}
+                  className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border w-full"
+                />
+                <button
+                  onClick={() => {
+                    remove(index);
+                  }}
+                  type="button"
+                  className="flex justify-center items-center gap-3 shadow-md rounded px-2 h-10 bg-secondary text-text hover:bg-accent hover:text-buttonText"
+                >
+                  <FontAwesomeIcon icon={faTrashCan} /> <span>Remove</span>
+                </button>
+              </div>
+              <span className="text-sm text-error">
+                {errors.media?.message}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
 
-        {mediaTwo && (
-          <FormInput
-            label="Media - #2"
-            type="text"
-            register={register}
-            name="media.1"
-            errors={errors}
-            className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
-            labelStyle="font-semiBold"
-          />
-        )}
-        {mediaThree && (
-          <FormInput
-            label="Media - #3"
-            type="text"
-            register={register}
-            name="media.2"
-            errors={errors}
-            className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
-            labelStyle="font-semiBold"
-          />
-        )}
-
-        <div className="flex gap-5">
-          <button
-            onClick={() => setMediaTwo((open) => !open)}
-            type="button"
-            className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-accent hover:text-text hover:font-semiBold cursor-pointer"
-          >
-            {mediaTwo ? (
-              <FontAwesomeIcon icon={faMinus} />
-            ) : (
-              <FontAwesomeIcon icon={faPlus} />
-            )}
-            <span className="ms-2">Media #2</span>
-          </button>
-          <button
-            onClick={() => setMediaThree((open) => !open)}
-            type="button"
-            className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-accent hover:text-text hover:font-semiBold cursor-pointer"
-          >
-            {mediaThree ? (
-              <FontAwesomeIcon icon={faMinus} />
-            ) : (
-              <FontAwesomeIcon icon={faPlus} />
-            )}
-            <span className="ms-2">Media #3</span>
-          </button>
-        </div>
-      </div>
+      <button
+        onClick={() => {
+          append("");
+        }}
+        type="button"
+        className="flex justify-center items-center gap-3 shadow-md rounded bg-primary p-3 text-buttonText hover:bg-accent"
+      >
+        Add Image
+      </button>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import Form from "../../../components/common/form/form";
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { postData } from "../../../data/headers/postData";
 import { API_BASE_URL, VENUES_ENDPOINT } from "../../../data/url/url";
 import { useState } from "react";
@@ -32,10 +32,12 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
     reset,
   } = useForm({
     defaultValues: {
-      media: [""],
+      media: [" "],
       country: "",
     },
   });
+
+  const { fields, append, remove } = useFieldArray({ control, name: "media" });
 
   const onSubmit = async (data) => {
     try {
@@ -134,7 +136,13 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
             <FormPageOne register={register} errors={errors} />
           )}
           {currentPage === 2 && (
-            <FormPageOTwo register={register} errors={errors} />
+            <FormPageOTwo
+              register={register}
+              errors={errors}
+              fields={fields}
+              append={append}
+              remove={remove}
+            />
           )}
           {currentPage === 3 && (
             <FormPageOThree

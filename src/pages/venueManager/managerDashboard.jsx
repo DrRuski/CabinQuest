@@ -11,7 +11,7 @@ export default function ManagerDashboard() {
   document.title = "Dashboard";
 
   return (
-    <section className="container mx-auto px-1 h-full">
+    <section className="container mx-auto px-3 md:px-0 h-full">
       <div>
         <button
           type="button"

@@ -46,14 +46,18 @@ export default function FormPageOThree({ register, errors, control }) {
         name="country"
         render={({ field: { name, onChange, value } }) => (
           <div className="flex flex-col gap-1">
-            <label className="font-semiBold">Country</label>
+            <label htmlFor="country" className="font-semiBold">
+              Country
+            </label>
             <CountryDropdown
+              id="country"
               classes="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
               defaultOptionLabel="Select Country"
               name={name}
               value={value}
               onChange={onChange}
             />
+            <span className="text-sm text-error">{errors[name]?.message}</span>
           </div>
         )}
         control={control}
@@ -62,7 +66,7 @@ export default function FormPageOThree({ register, errors, control }) {
       <input
         type="submit"
         value="Publish Venue"
-        className="shadow-md rounded bg-primary p-2 text-buttonText font-normal hover:bg-accent hover:text-text hover:font-semiBold cursor-pointer"
+        className="flex justify-center items-center gap-3 shadow-md rounded bg-primary p-3 text-buttonText hover:bg-accent cursor-pointer"
       />
     </>
   );

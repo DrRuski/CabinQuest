@@ -7,7 +7,6 @@ import {
   faBell,
   faChevronRight,
   faDashboard,
-  faEdit,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -45,7 +44,7 @@ function NavBar() {
   }, [isOpenDropDown]);
 
   return (
-    <nav className="container mx-auto flex items-center justify-between px-1">
+    <nav className="container mx-auto flex items-center justify-between px-3 md:px-0">
       <NavLink to="/" className="cursor-pointer text-text text-xl">
         Cabin<span className="font-bold">Quest</span>
       </NavLink>
@@ -90,13 +89,6 @@ function NavBar() {
                       clickLogic={() => setIsOpenDropDown(false)}
                     />
                     <DropdownItem
-                      text="Edit Profile"
-                      userData={userData}
-                      icon={faEdit}
-                      location={`user/${userData.name}`}
-                      clickLogic={() => setIsOpenDropDown(false)}
-                    />
-                    <DropdownItem
                       text="Dashboard"
                       icon={faDashboard}
                       location="dashboard"
@@ -135,7 +127,7 @@ function DropdownItem({ location, text, icon, size, clickLogic }) {
       <NavLink
         to={location}
         onClick={clickLogic}
-        className={`flex items-center justify-between p-2 rounded hover:shadow-md w-full hover:bg-secondary`}
+        className="flex items-center justify-between p-2 rounded hover:shadow-md w-full hover:bg-accent hover:text-buttonText"
       >
         <div className="flex gap-2 items-center">
           <FontAwesomeIcon size={size} icon={icon} />

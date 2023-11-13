@@ -51,6 +51,7 @@ export default function FormInput({
         </span>
       </label>
       <input
+        id={name}
         placeholder={placeholder}
         className={className}
         type={type}
