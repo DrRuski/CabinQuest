@@ -27,6 +27,20 @@ function NavBar() {
   const { userData, setUserData } = useContext(UserContext);
   const dropdown = useRef();
 
+  function greetingMessage() {
+    const currentHour = new Date().getHours();
+    let greeting;
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = `Good morning, ${userData.name}`;
+    } else if (currentHour >= 12 && currentHour < 18) {
+      greeting = `Good day, ${userData.name}`;
+    } else {
+      greeting = `Good evening, ${userData.name}`;
+    }
+
+    return greeting;
+  }
+
   useEffect(() => {
     const checkIfClickOutside = (e) => {
       if (
@@ -73,13 +87,15 @@ function NavBar() {
                 isOpenDropDown={isOpenDropDown}
               />
               {isOpenDropDown && (
-                <div className="flex flex-col gap-10 px-3 py-5 rounded bg-background absolute top-11 lg:w-[200px] shadow-md border border-opacity-30 border-border">
-                  <h3 className="font-semiBold mt-2 text-center">
-                    {userData.name}
-                  </h3>
+                <div className="flex flex-col gap-5 p-3 rounded bg-background absolute top-11 lg:w-[200px] shadow-md border border-opacity-30 border-border">
+                  <div>
+                    <h3 className="font-semiBold text-start">
+                      {greetingMessage()}
+                    </h3>
+                  </div>
                   <ul
                     id="dropdown"
-                    className="flex flex-col gap-5 justify-start "
+                    className="flex flex-col gap-3 justify-start"
                   >
                     <DropdownItem
                       text="My Profile"
@@ -138,18 +154,3 @@ function DropdownItem({ location, text, icon, size, clickLogic }) {
     </li>
   );
 }
-
-/*
-<li>
-          <NavLink
-            to="dashboard"
-            className={({ isActive }) =>
-              `flex justify-center items-center p-2 ${
-                isActive ? "active font-bold" : "inActive"
-              }`
-            }
-          >
-            <span>Dashboard Toggle</span>
-          </NavLink>
-        </li>
-*/

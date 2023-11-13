@@ -3,13 +3,19 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DataContext } from "../../context/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBreadSlice,
+  faParking,
+  faPaw,
+  faStar,
+  faWifi,
+} from "@fortawesome/free-solid-svg-icons";
 
 VenueList.propTypes = {
   venueData: PropTypes.array,
 };
 
-VenueItem.propTypes = {
+VenueListing.propTypes = {
   venue: PropTypes.object,
   index: PropTypes.number,
   keyID: PropTypes.string,
@@ -17,18 +23,19 @@ VenueItem.propTypes = {
 
 export default function VenueList() {
   const { data } = useContext(DataContext);
+
   return (
     <div className="container mx-auto px-3 md:px-0">
       <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {data?.map((venue) => (
-          <VenueItem key={venue.id} venue={venue} />
+          <VenueListing key={venue.id} venue={venue} />
         ))}
       </ul>
     </div>
   );
 }
 
-function VenueItem({ venue }) {
+function VenueListing({ venue }) {
   const handleImageError = (e) => {
     e.target.src = "/src/assets/images/imageNotFound.png";
   };
@@ -52,33 +59,12 @@ function VenueItem({ venue }) {
           />
         </div>
 
-        <div className="flex flex-col gap-2 py-2 px-1">
-          <VenueHeading venue={venue} />
-          <VenueLocation venue={venue} />
-          <div>
-            <ul className="grid grid-cols-2 gap-1">
-              <li className="flex">
-                <p>Wifi</p>
-                {venue.meta.wifi ? "✅" : "❌"}
-              </li>
-
-              <li className="flex">
-                <p>Breakfast</p>
-                {venue.meta.breakfast ? "✅" : "❌"}
-              </li>
-              <li className="flex">
-                <p>Pets</p>
-                {venue.meta.pets ? "✅" : "❌"}
-              </li>
-              <li className="flex">
-                <p>Parking</p>
-                {venue.meta.parking ? "✅" : "❌"}
-              </li>
-            </ul>
+        <div className="flex flex-col gap-3 p-2">
+          <div className="flex flex-col gap-1">
+            <VenueHeading venue={venue} />
+            <VenueLocation venue={venue} />
           </div>
-          <h3>
-            <span className="font-semiBold">{venue.price}$</span> / night
-          </h3>
+          <VenuePrice venue={venue} />
         </div>
       </Link>
     </li>
@@ -95,7 +81,7 @@ function VenueHeading({ venue }) {
       <h3 className="font-heading font-bold text-base md:text-xl">
         {venue.name}
       </h3>
-      <p className="flex items-center gap-2 px-2 py-1 rounded bg-accent text-buttonText font-semiBold">
+      <p className="flex items-center gap-2 rounded">
         <span>
           <FontAwesomeIcon icon={faStar} />
         </span>
@@ -118,9 +104,64 @@ function VenueLocation({ venue }) {
   };
   return (
     <div>
-      <p className="font-semiBold">{`${capitalize(venue.location.city)}, ${
-        venue.location.country
-      }`}</p>
+      <p>{`${capitalize(venue.location.city)}, ${venue.location.country}`}</p>
+    </div>
+  );
+}
+
+VenueAmenities.propTypes = {
+  venue: PropTypes.object,
+};
+
+function VenueAmenities({ venue }) {
+  return (
+    <ul className="grid grid-cols-2 gap-1">
+      <li>
+        <p className={`${venue.meta.wifi ? "font-semiBold" : "line-through"}`}>
+          <FontAwesomeIcon icon={faWifi} /> <span className="ms-1">Wifi</span>
+        </p>
+      </li>
+
+      <li>
+        <p
+          className={`${
+            venue.meta.breakfast ? "font-semiBold" : "line-through"
+          }`}
+        >
+          <FontAwesomeIcon icon={faBreadSlice} />{" "}
+          <span className="ms-1">Breakfast</span>
+        </p>
+      </li>
+      <li>
+        <p className={`${venue.meta.pets ? "font-semiBold" : "line-through"}`}>
+          <FontAwesomeIcon icon={faPaw} /> <span className="ms-1">Pets</span>
+        </p>
+      </li>
+      <li>
+        <p
+          className={`${venue.meta.parking ? "font-semiBold" : "line-through"}`}
+        >
+          <FontAwesomeIcon icon={faParking} />{" "}
+          <span className="ms-1">Parking</span>
+        </p>
+      </li>
+    </ul>
+  );
+}
+
+VenuePrice.propTypes = {
+  venue: PropTypes.object,
+};
+
+function VenuePrice({ venue }) {
+  return (
+    <div className="flex items-center justify-end">
+      <h3 className="flex gap-2 items-baseline">
+        <span className="font-semiBold text-base md:text-xl">
+          {venue.price}$
+        </span>
+        <span>/ night</span>
+      </h3>
     </div>
   );
 }
