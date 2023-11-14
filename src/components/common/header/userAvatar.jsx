@@ -16,11 +16,15 @@ export default function UserAvatar({
       {userData.avatar ? (
         <button
           type="button"
-          className="p-1 h-10 w-10 rounded hover:bg-accent hover:shadow-md"
+          className={`p-[2px] h-12 w-12 rounded ${
+            isOpenDropDown
+              ? "bg-accent shadow-md"
+              : "hover:shadow-md hover:bg-accent"
+          }`}
           onClick={() => setIsOpenDropDown((open) => !open)}
         >
           <img
-            className="object-cover w-full h-full rounded-full shadow-md"
+            className="object-cover w-full h-full shadow-md rounded"
             src={userData.avatar}
             alt={userData.name}
           />
@@ -28,7 +32,7 @@ export default function UserAvatar({
       ) : (
         <button
           type="button"
-          className={`p-1 h-10 w-10 text-buttonText font-bold rounded hover:bg-accent hover:shadow-md ${
+          className={`p-1 h-12 w-12 text-buttonText font-bold rounded hover:bg-accent hover:shadow-md ${
             isOpenDropDown ? "bg-accent shadow-md" : "bg-primary"
           }`}
           onClick={() => setIsOpenDropDown((open) => !open)}

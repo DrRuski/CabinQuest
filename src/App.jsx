@@ -4,7 +4,7 @@ import Layout from "./components/layout/layout";
 import AuthContainer from "./pages/authentication/authContainer";
 import { useLocalStorageState } from "./misc/localStorage";
 import Home from "./pages/home/home";
-import UserProfile from "./pages/UserProfile/userProfile";
+import UserProfile from "./pages/userProfile/userProfile";
 import VenueDetails from "./pages/VenueDetails/venueDetails";
 import ManagerDashboard from "./pages/venueManager/managerDashboard";
 import { DataContext, UserContext } from "./context/context";

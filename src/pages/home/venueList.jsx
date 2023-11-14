@@ -15,25 +15,23 @@ VenueList.propTypes = {
   venueData: PropTypes.array,
 };
 
+export default function VenueList() {
+  const { data } = useContext(DataContext);
+
+  return (
+    <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {data?.map((venue) => (
+        <VenueListing key={venue.id} venue={venue} />
+      ))}
+    </ul>
+  );
+}
+
 VenueListing.propTypes = {
   venue: PropTypes.object,
   index: PropTypes.number,
   keyID: PropTypes.string,
 };
-
-export default function VenueList() {
-  const { data } = useContext(DataContext);
-
-  return (
-    <div className="container mx-auto px-3 md:px-0">
-      <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {data?.map((venue) => (
-          <VenueListing key={venue.id} venue={venue} />
-        ))}
-      </ul>
-    </div>
-  );
-}
 
 function VenueListing({ venue }) {
   const handleImageError = (e) => {
@@ -59,7 +57,7 @@ function VenueListing({ venue }) {
           />
         </div>
 
-        <div className="flex flex-col gap-3 p-2">
+        <div className="flex flex-col justify-between gap-3 p-2 h-full">
           <div className="flex flex-col gap-1">
             <VenueHeading venue={venue} />
             <VenueLocation venue={venue} />

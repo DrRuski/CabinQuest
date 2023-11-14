@@ -87,7 +87,7 @@ function NavBar() {
                 isOpenDropDown={isOpenDropDown}
               />
               {isOpenDropDown && (
-                <div className="flex flex-col gap-5 p-3 rounded bg-background absolute top-11 lg:w-[200px] shadow-md border border-opacity-30 border-border">
+                <div className="flex flex-col gap-5 p-3 rounded bg-background absolute top-14 lg:w-[200px] shadow-md border border-opacity-30 border-border">
                   <div>
                     <h3 className="font-semiBold text-start">
                       {greetingMessage()}
