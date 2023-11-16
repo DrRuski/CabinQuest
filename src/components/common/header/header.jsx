@@ -59,8 +59,12 @@ function NavBar() {
 
   return (
     <nav className="container mx-auto flex items-center justify-between px-3 md:px-0">
-      <NavLink to="/" className="cursor-pointer text-text text-xl">
-        Cabin<span className="font-bold">Quest</span>
+      <NavLink to="/" className="cursor-pointer">
+        <img
+          className="block object-cover aspect-square"
+          src="/src/assets/images/cabinQSvg.svg"
+          alt="CabinQuest"
+        />
       </NavLink>
 
       <div className="flex gap-7">

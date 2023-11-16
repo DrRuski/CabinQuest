@@ -31,7 +31,7 @@ export default function FormPageOne({ register, errors }) {
         register={register}
         name="description"
         errors={errors}
-        className="ps-2 rounded outline-primary focus:shadow-md border border-border"
+        className="p-2 rounded outline-primary focus:shadow-md border border-border"
         labelStyle="font-semiBold"
       />
 

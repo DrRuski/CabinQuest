@@ -8,15 +8,15 @@ export default function AuthContainer() {
     <div className="container m-auto">
       <div className="flex h-screen">
         <div className="flex flex-col md:flex-row justify-center items-center shadow md:w-[800px] md:h-[500px] m-auto">
-          <div className="flex flex-col justify-center items-center bg-primary md:w-[400px] md:h-[500px] text-text">
+          <div className="flex flex-col justify-center items-center md:w-[400px] md:h-[500px] text-text">
             <AuthLogo />
           </div>
 
           <div className="flex flex-col items-center justify-between p-4 md:w-[400px] md:h-[500px]">
-            <div className="flex gap-5 p-2 rounded-full shadow-inner">
+            <div className="flex gap-5 p-2 rounded-full shadow-inner bg-[#fefefe]">
               <button
                 className={`p-1 px-5 shadow rounded-full ${
-                  isOpen ? "bg-primary text-buttonText" : ""
+                  isOpen ? "bg-primary text-buttonText" : "hover:bg-secondary"
                 }`}
                 onClick={() => setIsOpen(true)}
               >
@@ -24,7 +24,7 @@ export default function AuthContainer() {
               </button>
               <button
                 className={`p-1 px-5 shadow rounded-full ${
-                  !isOpen ? "bg-primary text-buttonText" : ""
+                  !isOpen ? "bg-primary text-buttonText" : "hover:bg-secondary"
                 }`}
                 onClick={() => setIsOpen(false)}
               >
@@ -52,8 +52,16 @@ export default function AuthContainer() {
 
 function AuthLogo() {
   return (
-    <div>
-      <h2 className="text-buttonText text-2xl">Website Logo</h2>
+    <div className="flex flex-col items-center justify-center p-1 gap-2">
+      <img
+        className="object-cover aspect-square w-[200px]"
+        src="/src/assets/images/cabinQSvg.svg"
+        alt=""
+      />
+      <h1 className="text-center font-heading font-semiBold">
+        Welcome to CabinQuest, where every stay is an unforgettable chapter in
+        your travel story.
+      </h1>
     </div>
   );
 }

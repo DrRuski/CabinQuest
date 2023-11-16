@@ -1,4 +1,5 @@
-export const updateProfile = (data, token) => {
+export const putData = (data, token) => {
+  console.log(data);
   if (token) {
     return {
       method: "PUT",

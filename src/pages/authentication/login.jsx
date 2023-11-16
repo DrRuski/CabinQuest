@@ -84,10 +84,10 @@ export default function Login() {
         <input
           type="submit"
           value={authenticated ? "Redirecting..." : "Login"}
-          className={`rounded  p-2 text-buttonText font-normal   cursor-pointer ${
+          className={`rounded p-2 text-buttonText font-normal cursor-pointer ${
             authenticated
               ? "bg-secondary shadow-lg shadow-primary"
-              : "bg-primary shadow-md hover:bg-secondary hover:text-text"
+              : "bg-primary shadow-md hover:bg-accent"
           }`}
         />
       </Form>
