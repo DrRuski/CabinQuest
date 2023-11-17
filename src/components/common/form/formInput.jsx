@@ -20,6 +20,7 @@ FormInput.propTypes = {
   setValueAs: PropTypes.func,
   icon: PropTypes.object,
   idKey: PropTypes.string,
+  iconStyle: PropTypes.string,
 };
 
 export default function FormInput({
@@ -41,12 +42,13 @@ export default function FormInput({
   placeholder,
   icon,
   idKey,
+  iconStyle = "text-accent me-2",
 }) {
   return (
     <div key={idKey} className={inputContainerStyle}>
       <label className={labelStyle} htmlFor={name}>
         <span>
-          {icon && <FontAwesomeIcon className="text-accent me-2" icon={icon} />}
+          {icon && <FontAwesomeIcon className={iconStyle} icon={icon} />}
           {label}
         </span>
       </label>

@@ -1,7 +1,13 @@
 import PropTypes from "prop-types";
-import FormInput from "../../../../components/common/form/formInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBreadSlice,
+  faParking,
+  faPaw,
+  faTrashCan,
+  faWifi,
+} from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 FormPageOTwo.propTypes = {
   register: PropTypes.func,
@@ -18,6 +24,7 @@ export default function FormPageOTwo({
   remove,
   append,
 }) {
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <>
       <h3 className="font-heading font-semiBold text-xl text-center">
@@ -26,43 +33,98 @@ export default function FormPageOTwo({
 
       <div className="flex flex-col gap-1">
         <h4 className="font-semiBold">Commodities</h4>
-        <div className="grid grid-cols-2 gap-5 p-2 rounded shadow-md">
-          <FormInput
-            label="Wifi"
-            type="checkbox"
-            register={register}
-            name="wifi"
-            errors={errors}
-            className=""
-            inputContainerStyle="flex justify-end flex-row-reverse gap-5"
-          />
-          <FormInput
-            label="Parking"
-            type="checkbox"
-            register={register}
-            name="parking"
-            errors={errors}
-            className=""
-            inputContainerStyle="flex justify-end flex-row-reverse gap-5"
-          />
-          <FormInput
-            label="Breakfast"
-            type="checkbox"
-            register={register}
-            name="breakfast"
-            errors={errors}
-            className=""
-            inputContainerStyle="flex justify-end flex-row-reverse gap-5"
-          />
-          <FormInput
-            label="Pets"
-            type="checkbox"
-            register={register}
-            name="pets"
-            errors={errors}
-            className=""
-            inputContainerStyle="flex justify-end flex-row-reverse gap-5"
-          />
+        <div className="grid grid-cols-2 gap-5 rounded p-5 shadow-md">
+          <div>
+            <label
+              className={`py-2 px-10 rounded cursor-pointer ${
+                isChecked
+                  ? "bg-primary text-buttonText font-semiBold"
+                  : "bg-border"
+              }`}
+              htmlFor="wifi"
+            >
+              <FontAwesomeIcon icon={faWifi} />{" "}
+              <span className="ms-2">Wifi</span>
+              <input
+                id="wifi"
+                type="checkbox"
+                {...register("wifi")}
+                checked={isChecked}
+                onChange={() => setIsChecked((prev) => !prev)}
+                name="wifi"
+                className="hidden"
+              />
+            </label>
+          </div>
+
+          <div>
+            <label
+              className={`py-2 px-10 rounded cursor-pointer ${
+                isChecked
+                  ? "bg-primary text-buttonText font-semiBold"
+                  : "bg-border"
+              }`}
+              htmlFor="parking"
+            >
+              <FontAwesomeIcon icon={faParking} />{" "}
+              <span className="ms-2">Parking</span>
+              <input
+                id="parking"
+                type="checkbox"
+                {...register("parking")}
+                checked={isChecked}
+                onChange={() => setIsChecked((prev) => !prev)}
+                name="parking"
+                className="hidden"
+              />
+            </label>
+          </div>
+
+          <div>
+            <label
+              className={`py-2 px-10 rounded cursor-pointer ${
+                isChecked
+                  ? "bg-primary text-buttonText font-semiBold"
+                  : "bg-border"
+              }`}
+              htmlFor="pets"
+            >
+              <FontAwesomeIcon icon={faPaw} />{" "}
+              <span className="ms-2">Pets</span>
+              <input
+                id="pets"
+                type="checkbox"
+                {...register("pets")}
+                checked={isChecked}
+                onChange={() => setIsChecked((prev) => !prev)}
+                name="pets"
+                className="hidden"
+              />
+            </label>
+          </div>
+
+          <div>
+            <label
+              className={`py-2 px-10 rounded cursor-pointer ${
+                isChecked
+                  ? "bg-primary text-buttonText font-semiBold"
+                  : "bg-border"
+              }`}
+              htmlFor="breakfast"
+            >
+              <FontAwesomeIcon icon={faBreadSlice} />{" "}
+              <span className="ms-2">Breakfast</span>
+              <input
+                id="breakfast"
+                type="checkbox"
+                {...register("breakfast")}
+                checked={isChecked}
+                onChange={() => setIsChecked((prev) => !prev)}
+                name="breakfast"
+                className="hidden"
+              />
+            </label>
+          </div>
         </div>
       </div>
 
