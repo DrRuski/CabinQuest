@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import { useEffect, useContext } from "react";
-import { getBookingsHeader } from "../../../data/headers/getBookings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { deleteBooking } from "../../../data/headers/deleteData";
+import { deleteData } from "../../../data/headers/deleteData";
 import { BookingsContext } from "../../../context/context";
+import { getProfileContents } from "../../../data/headers/getProfileContents";
+import { API_BASE_URL, DELETE_BOOKING, PROFILE } from "../../../data/url/url";
 
 UserBookings.propTypes = {
   userData: PropTypes.object,
@@ -26,8 +27,8 @@ export default function UserBookings({ userData }) {
     const controller = new AbortController();
     async function getBookings() {
       try {
-        const response = await getBookingsHeader(
-          userData.name,
+        const response = await getProfileContents(
+          `${API_BASE_URL}${PROFILE}${userData.name}/bookings?_venue=true&_customer=true`,
           userData.accessToken,
           controller
         );
@@ -43,7 +44,7 @@ export default function UserBookings({ userData }) {
 
   function handleDeleteBooking(id, accessToken) {
     setBookings((bookings) => bookings.filter((booking) => booking.id !== id));
-    deleteBooking(id, accessToken);
+    deleteData(`${API_BASE_URL}${DELETE_BOOKING}${id}`, accessToken);
   }
 
   return (

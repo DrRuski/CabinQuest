@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { API_BASE_URL, UPDATE_PROFILE_MEDIA } from "../../../data/url/url";
+import { API_BASE_URL, PROFILE } from "../../../data/url/url";
 import { putData } from "../../../data/headers/putData";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,9 +27,10 @@ export default function UserAvatar({ userData, setUserData, setIsLoading }) {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `${API_BASE_URL}${UPDATE_PROFILE_MEDIA}${userData.name}/media`,
-        putData(data, userData.accessToken)
+      const response = await putData(
+        `${API_BASE_URL}${PROFILE}${userData.name}/media`,
+        data,
+        userData.accessToken
       );
       if (response.ok) {
         const updateAvatar = await response.json();

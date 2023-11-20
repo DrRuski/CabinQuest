@@ -1,7 +1,8 @@
-export const deleteData = async (url, token) => {
+export const getProfileContents = async (url, token, controller) => {
   if (token) {
     return await fetch(url, {
-      method: "DELETE",
+      signal: controller.signal,
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },

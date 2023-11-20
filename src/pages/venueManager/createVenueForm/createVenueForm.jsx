@@ -29,8 +29,6 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
   const [pets, setPets] = useState(false);
   const [breakfast, setBreakfast] = useState(false);
 
-  console.log(wifi);
-
   const {
     register,
     handleSubmit,

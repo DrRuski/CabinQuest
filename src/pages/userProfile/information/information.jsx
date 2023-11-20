@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { API_BASE_URL, UPDATE_MANAGER_STATUS } from "../../../data/url/url";
+import { API_BASE_URL, PROFILE } from "../../../data/url/url";
 import { putData } from "../../../data/headers/putData";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,10 +24,12 @@ export default function UserInformation({ userData, setUserData }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}${UPDATE_MANAGER_STATUS}${userData.name}`,
-        putData(data, userData.accessToken)
+      const response = await putData(
+        `${API_BASE_URL}${PROFILE}${userData.name}`,
+        data,
+        userData.accessToken
       );
+
       if (response.ok) {
         const updateManagerStatus = await response.json();
         setUserData({

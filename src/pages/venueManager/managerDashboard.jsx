@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/context";
-import CreateVenueForm from "./createVenue/createVenueForm";
+import CreateVenueForm from "./createVenueForm/createVenueForm";
+import OwnedVenuesList from "./ownedVenuesList/ownedVenuesList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -23,8 +24,11 @@ export default function ManagerDashboard() {
           <FontAwesomeIcon icon={faPlus} />
           <p>Create New Venue</p>
         </button>
+        {isOpen && (
+          <CreateVenueForm userData={userData} setIsOpen={setIsOpen} />
+        )}
       </div>
-      {isOpen && <CreateVenueForm userData={userData} setIsOpen={setIsOpen} />}
+      <OwnedVenuesList userData={userData} />
     </section>
   );
 }
