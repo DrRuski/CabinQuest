@@ -9,7 +9,7 @@ FormPageOne.propTypes = {
 
 export default function FormPageOne({ register, errors }) {
   return (
-    <>
+    <div>
       <h3 className="font-heading font-semiBold text-xl text-center">
         Basic Venue Information
       </h3>
@@ -55,6 +55,6 @@ export default function FormPageOne({ register, errors }) {
         className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
         labelStyle="font-semiBold"
       />
-    </>
+    </div>
   );
 }

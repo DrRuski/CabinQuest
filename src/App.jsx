@@ -7,11 +7,14 @@ import Home from "./pages/home/home";
 import UserProfile from "./pages/userProfile/userProfile";
 import VenueDetails from "./pages/VenueDetails/venueDetails";
 import ManagerDashboard from "./pages/venueManager/managerDashboard";
-import { DataContext, UserContext } from "./context/context";
+import { DataContext, UserContext, BookingsContext } from "./context/context";
+import { useState } from "react";
 
 export default function App() {
   const [userData, setUserData] = useLocalStorageState({}, "userProfile");
+  const [bookings, setBookings] = useState([]);
   const { data, isLoading } = useData(userData);
+  const bookingsValue = { bookings, setBookings };
   const userValue = { userData, setUserData };
   const dataValue = { data };
 
@@ -19,25 +22,27 @@ export default function App() {
     <div>
       <UserContext.Provider value={userValue}>
         <DataContext.Provider value={dataValue}>
-          <Routes>
-            <Route path="login" element={<AuthContainer />}></Route>
-            <Route element={<Layout />}>
-              <Route
-                index
-                path="/"
-                element={<Home isLoading={isLoading} />}
-              ></Route>
-              <Route
-                path={`user/${userData.name}`}
-                element={<UserProfile />}
-              ></Route>
-              <Route
-                path="venue/:id"
-                element={<VenueDetails data={data} />}
-              ></Route>
-              <Route path="dashboard" element={<ManagerDashboard />}></Route>
-            </Route>
-          </Routes>
+          <BookingsContext.Provider value={bookingsValue}>
+            <Routes>
+              <Route path="login" element={<AuthContainer />}></Route>
+              <Route element={<Layout />}>
+                <Route
+                  index
+                  path="/"
+                  element={<Home isLoading={isLoading} />}
+                ></Route>
+                <Route
+                  path={`user/${userData.name}`}
+                  element={<UserProfile />}
+                ></Route>
+                <Route
+                  path="venue/:id"
+                  element={<VenueDetails data={data} />}
+                ></Route>
+                <Route path="dashboard" element={<ManagerDashboard />}></Route>
+              </Route>
+            </Routes>
+          </BookingsContext.Provider>
         </DataContext.Provider>
       </UserContext.Provider>
     </div>

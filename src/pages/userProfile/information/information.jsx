@@ -55,7 +55,7 @@ export default function UserInformation({ userData, setUserData }) {
         <div
           className={`flex gap-5 items-center w-full ${
             userData.venueManager
-              ? "rounded shadow bg-accent text-buttonText w-full hover:bg-secondary hover:text-text"
+              ? "rounded shadow bg-accent text-buttonText w-full hover:bg-error hover:text-buttonText"
               : "rounded shadow-md bg-secondary text-text w-full hover:bg-accent hover:text-buttonText"
           }`}
         >

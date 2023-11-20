@@ -12,7 +12,7 @@ export default function Home({ isLoading }) {
 
   return (
     <section className="container mx-auto px-3 md:px-0">
-      {isLoading ? <Loader /> : <VenueList />}
+      {isLoading ? <Loader className="h-full" /> : <VenueList />}
     </section>
   );
 }

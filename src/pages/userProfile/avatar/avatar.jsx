@@ -11,9 +11,10 @@ import FormInput from "../../../components/common/form/formInput";
 UserAvatar.propTypes = {
   userData: PropTypes.object,
   setUserData: PropTypes.func,
+  setIsLoading: PropTypes.func,
 };
 
-export default function UserAvatar({ userData, setUserData }) {
+export default function UserAvatar({ userData, setUserData, setIsLoading }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -25,6 +26,7 @@ export default function UserAvatar({ userData, setUserData }) {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `${API_BASE_URL}${UPDATE_PROFILE_MEDIA}${userData.name}/media`,
         putData(data, userData.accessToken)
@@ -41,6 +43,8 @@ export default function UserAvatar({ userData, setUserData }) {
     } catch (error) {
       console.error(error);
       throw new Error("Error Description", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,11 +74,11 @@ export default function UserAvatar({ userData, setUserData }) {
             name="avatar"
             errors={errors}
             className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border w-full"
-            inputContainerStyle="flex gap-1 w-full"
+            inputContainerStyle="flex"
           >
             <input
               type="submit"
-              className="p-2 rounded shadow bg-secondary hover:bg-accent hover:text-buttonText cursor-pointer"
+              className="ms-1 p-2 rounded shadow bg-secondary hover:bg-accent hover:text-buttonText cursor-pointer"
             />
           </FormInput>
         </Form>

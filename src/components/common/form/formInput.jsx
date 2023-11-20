@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 FormInput.propTypes = {
   children: PropTypes.node,
-  name: PropTypes.string.isRequired,
-  register: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  register: PropTypes.func,
+  type: PropTypes.string,
   label: PropTypes.string,
   labelStyle: PropTypes.string,
   placeholder: PropTypes.string,

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 Form.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   onSubmit: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   className: PropTypes.string,
