@@ -11,7 +11,7 @@ export default function UserProfile() {
   document.title = `${userData.name}`;
 
   return (
-    <section className="container mx-auto h-screen px-3 md:px-0">
+    <section className="container mx-auto h-full px-3 md:px-0">
       <div className="flex flex-col lg:flex-row gap-7 lg:gap-14">
         <div className="flex flex-col gap-2 items-center p-2 md:p-6 shadow-xl border rounded border-border md:w-[400px]">
           {isLoading ? (

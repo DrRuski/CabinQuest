@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { getProfileContents } from "../../../data/headers/getProfileContents";
 import { API_BASE_URL, DELETE_VENUE, PROFILE } from "../../../data/url/url";
-import { Link } from "react-router-dom";
 import { deleteData } from "../../../data/headers/deleteData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,6 +10,7 @@ import {
   faPlus,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { capitalize } from "../../../misc/capitalize";
 
 OwnedVenuesList.propTypes = {
   userData: PropTypes.object,
@@ -20,6 +20,7 @@ OwnedVenuesList.propTypes = {
 
 export default function OwnedVenuesList({ userData, setIsOpen }) {
   const [ownedVenues, setOwnedVenues] = useState([]);
+  const [statsOpen, setStatsOpen] = useState(false);
 
   const handleImageError = (e) => {
     e.target.src = "/src/assets/images/imageNotFound.png";
@@ -63,41 +64,41 @@ export default function OwnedVenuesList({ userData, setIsOpen }) {
       <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         <button
           type="button"
-          className="flex justify-center items-center border border-border border-dashed gap-2 shadow rounded text-text hover:bg-secondary h-full"
+          className="flex justify-center items-center border border-border border-dashed gap-2 shadow rounded text-text hover:bg-secondary hover:shadow-xl min-h-[362px]"
           onClick={() => setIsOpen((open) => !open)}
         >
           <FontAwesomeIcon icon={faPlus} />
           <p>Create New Venue</p>
         </button>
         {ownedVenues?.map((venue) => (
-          <li className="relative" key={venue.id}>
-            <Link
-              to={`/venue/${venue.id}`}
-              className="flex flex-col h-full shadow hover:shadow-xl rounded cursor-pointer"
-            >
-              <div>
-                <img
-                  className="object-cover aspect-square rounded-t w-full h-full"
-                  src={
-                    venue.media
-                      ? venue.media[0]
-                      : "/src/assets/images/imageNotFound.png"
-                  }
-                  alt={venue.name}
-                  onError={handleImageError}
-                />
-              </div>
+          <li
+            className="flex flex-col h-full shadow rounded relative"
+            key={venue.id}
+          >
+            <div>
+              <img
+                className="object-cover aspect-square rounded-t w-full h-full"
+                src={
+                  venue.media
+                    ? venue.media[0]
+                    : "/src/assets/images/imageNotFound.png"
+                }
+                alt={venue.name}
+                onError={handleImageError}
+              />
+            </div>
 
-              <div className="flex flex-col justify-between gap-3 p-2 h-full">
-                <div className="flex flex-col gap-1">
-                  <h3>{venue.name}</h3>
-                  <h4 className="flex gap-1 flex-wrap">
-                    <span>{venue.location.city},</span>
-                    <span>{venue.location.country}</span>
-                  </h4>
-                </div>
+            <div className="flex flex-col justify-between gap-3 p-2 h-full">
+              <div className="flex flex-col gap-1">
+                <h3>{venue.name}</h3>
+                <p className="flex gap-1 flex-wrap">
+                  <span>
+                    {capitalize(venue.location.city)} {venue.location.zip},
+                  </span>
+                  <span>{venue.location.country}</span>
+                </p>
               </div>
-            </Link>
+            </div>
             <ul className="flex gap-2 absolute right-2 top-2">
               <li className="z-40">
                 <button className="py-1 px-2 rounded text-buttonText bg-primary hover:bg-accent shadow-md">
@@ -125,4 +126,8 @@ export default function OwnedVenuesList({ userData, setIsOpen }) {
       </ul>
     </div>
   );
+}
+
+function StatsScreen({ venue }) {
+  return <div className="absolute right-0 left-0 m-auto">Hello</div>;
 }

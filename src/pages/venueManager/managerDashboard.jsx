@@ -11,7 +11,7 @@ export default function ManagerDashboard() {
 
   return (
     <section className="container mx-auto px-3 md:px-0 h-full">
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-7">
         <div>
           <h1 className="text-2xl font-semiBold">Welcome to your dashboard</h1>
           <p>
@@ -20,11 +20,7 @@ export default function ManagerDashboard() {
           </p>
         </div>
         {isOpen && (
-          <CreateVenueForm
-            userData={userData}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-          />
+          <CreateVenueForm userData={userData} setIsOpen={setIsOpen} />
         )}
         <OwnedVenuesList userData={userData} setIsOpen={setIsOpen} />
       </div>

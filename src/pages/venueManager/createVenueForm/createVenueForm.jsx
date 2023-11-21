@@ -20,11 +20,10 @@ CreateVenueForm.propTypes = {
   userData: PropTypes.shape({
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
-  isOpen: PropTypes.bool,
   setIsOpen: PropTypes.func,
 };
 
-export default function CreateVenueForm({ userData, isOpen, setIsOpen }) {
+export default function CreateVenueForm({ userData, setIsOpen }) {
   const [wifi, setWifi] = useState(false);
   const [parking, setParking] = useState(false);
   const [pets, setPets] = useState(false);
@@ -81,11 +80,7 @@ export default function CreateVenueForm({ userData, isOpen, setIsOpen }) {
   };
 
   return (
-    <div
-      className={`rounded bg-background shadow-lg lg:w-[850px] p-5 z-50 absolute left-0 right-0 m-auto ${
-        isOpen ? "backdrop-blur" : ""
-      }`}
-    >
+    <div className="rounded bg-background shadow-lg lg:w-[850px] p-5 z-50 absolute left-0 right-0 m-auto">
       <div className="flex flex-col gap-3">
         <div className="flex justify-between">
           <h1 className="font-heading md:text-2xl font-bold">
@@ -128,6 +123,7 @@ export default function CreateVenueForm({ userData, isOpen, setIsOpen }) {
               register={register}
               name="price"
               errors={errors}
+              inputmode="numeric"
               setValueAs={(value) => parseInt(value)}
               className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
               labelStyle="font-semiBold"
@@ -138,6 +134,7 @@ export default function CreateVenueForm({ userData, isOpen, setIsOpen }) {
               register={register}
               name="maxGuests"
               errors={errors}
+              inputmode="numeric"
               setValueAs={(value) => parseInt(value)}
               className="ps-2 rounded h-10 outline-primary focus:shadow-md border border-border"
               labelStyle="font-semiBold"

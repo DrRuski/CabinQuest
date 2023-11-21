@@ -83,6 +83,8 @@ export default function Registration({ setIsOpen }) {
           register={register}
           name="password"
           errors={errors}
+          minLength={8}
+          minLengthMessage="Password must be at least 8 characters long."
           className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
         />
 

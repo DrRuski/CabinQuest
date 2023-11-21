@@ -10,6 +10,7 @@ import {
   faStar,
   faWifi,
 } from "@fortawesome/free-solid-svg-icons";
+import { capitalize } from "../../misc/capitalize";
 
 VenueList.propTypes = {
   venueData: PropTypes.array,
@@ -94,15 +95,14 @@ VenueLocation.propTypes = {
 };
 
 function VenueLocation({ venue }) {
-  const capitalize = (str) => {
-    if (!str || typeof str !== "string") {
-      return str;
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
   return (
     <div>
-      <p>{`${capitalize(venue.location.city)}, ${venue.location.country}`}</p>
+      <p className="flex gap-1 flex-wrap">
+        <span>
+          {capitalize(venue.location.city)} {venue.location.zip},
+        </span>
+        <span>{venue.location.country}</span>
+      </p>
     </div>
   );
 }

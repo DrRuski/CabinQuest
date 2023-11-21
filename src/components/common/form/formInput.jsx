@@ -21,6 +21,9 @@ FormInput.propTypes = {
   icon: PropTypes.object,
   idKey: PropTypes.string,
   iconStyle: PropTypes.string,
+  inputmode: PropTypes.string,
+  minLengthMessage: PropTypes.string,
+  maxLengthMessage: PropTypes.string,
 };
 
 export default function FormInput({
@@ -43,6 +46,9 @@ export default function FormInput({
   icon,
   idKey,
   iconStyle = "text-accent me-2",
+  inputmode,
+  minLengthMessage,
+  maxLengthMessage,
 }) {
   return (
     <div key={idKey} className={inputContainerStyle}>
@@ -56,11 +62,12 @@ export default function FormInput({
         id={name}
         placeholder={placeholder}
         className={className}
+        inputMode={inputmode}
         type={type}
         {...register(name, {
           required: required,
-          minLength: minLength,
-          maxLength: maxLength,
+          minLength: { value: minLength, message: minLengthMessage },
+          maxLength: { value: maxLength, message: maxLengthMessage },
           pattern: {
             value: patternValue,
             message: patternMessage,

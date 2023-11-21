@@ -38,7 +38,6 @@ export default function UserAvatar({ userData, setUserData, setIsLoading }) {
         reset();
         setIsOpen(false);
       } else {
-        console.log(response);
         throw new Error("Error Description", response.message);
       }
     } catch (error) {
