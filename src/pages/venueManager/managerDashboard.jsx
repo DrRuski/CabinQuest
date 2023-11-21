@@ -2,8 +2,6 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/context";
 import CreateVenueForm from "./createVenueForm/createVenueForm";
 import OwnedVenuesList from "./ownedVenuesList/ownedVenuesList";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function ManagerDashboard() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,22 +11,23 @@ export default function ManagerDashboard() {
 
   return (
     <section className="container mx-auto px-3 md:px-0 h-full">
-      <div>
-        <button
-          type="button"
-          className={`flex justify-center items-center gap-2 shadow-md rounded p-3 text-buttonText hover:bg-accent ${
-            isOpen ? "bg-accent" : "bg-primary"
-          }`}
-          onClick={() => setIsOpen((open) => !open)}
-        >
-          <FontAwesomeIcon icon={faPlus} />
-          <p>Create New Venue</p>
-        </button>
+      <div className="flex flex-col gap-5">
+        <div>
+          <h1 className="text-2xl font-semiBold">Welcome to your dashboard</h1>
+          <p>
+            Here you can edit, delete and even check individual stats for the
+            venues that you manage.
+          </p>
+        </div>
         {isOpen && (
-          <CreateVenueForm userData={userData} setIsOpen={setIsOpen} />
+          <CreateVenueForm
+            userData={userData}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
         )}
+        <OwnedVenuesList userData={userData} setIsOpen={setIsOpen} />
       </div>
-      <OwnedVenuesList userData={userData} />
     </section>
   );
 }

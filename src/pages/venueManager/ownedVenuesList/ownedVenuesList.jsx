@@ -5,13 +5,20 @@ import { API_BASE_URL, DELETE_VENUE, PROFILE } from "../../../data/url/url";
 import { Link } from "react-router-dom";
 import { deleteData } from "../../../data/headers/deleteData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartLine,
+  faEdit,
+  faPlus,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 
 OwnedVenuesList.propTypes = {
   userData: PropTypes.object,
+  isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func,
 };
 
-export default function OwnedVenuesList({ userData }) {
+export default function OwnedVenuesList({ userData, setIsOpen }) {
   const [ownedVenues, setOwnedVenues] = useState([]);
 
   const handleImageError = (e) => {
@@ -47,17 +54,23 @@ export default function OwnedVenuesList({ userData }) {
   }, [userData.name, userData.accessToken, setOwnedVenues]);
 
   function handleDeleteVenue(id, accessToken) {
-    console.log(id);
     setOwnedVenues((venues) => venues.filter((venue) => venue.id !== id));
     deleteData(`${API_BASE_URL}${DELETE_VENUE}${id}`, accessToken);
-    console.log(`${API_BASE_URL}${DELETE_VENUE}${id}`);
   }
 
   return (
     <div>
       <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <button
+          type="button"
+          className="flex justify-center items-center border border-border border-dashed gap-2 shadow rounded text-text hover:bg-secondary h-full"
+          onClick={() => setIsOpen((open) => !open)}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          <p>Create New Venue</p>
+        </button>
         {ownedVenues?.map((venue) => (
-          <li key={venue.id}>
+          <li className="relative" key={venue.id}>
             <Link
               to={`/venue/${venue.id}`}
               className="flex flex-col h-full shadow hover:shadow-xl rounded cursor-pointer"
@@ -76,15 +89,37 @@ export default function OwnedVenuesList({ userData }) {
               </div>
 
               <div className="flex flex-col justify-between gap-3 p-2 h-full">
-                <div className="flex flex-col gap-1"></div>
+                <div className="flex flex-col gap-1">
+                  <h3>{venue.name}</h3>
+                  <h4 className="flex gap-1 flex-wrap">
+                    <span>{venue.location.city},</span>
+                    <span>{venue.location.country}</span>
+                  </h4>
+                </div>
               </div>
             </Link>
-            <button
-              className="p-1 bg-error rounded"
-              onClick={() => handleDeleteVenue(venue.id, userData.accessToken)}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+            <ul className="flex gap-2 absolute right-2 top-2">
+              <li className="z-40">
+                <button className="py-1 px-2 rounded text-buttonText bg-primary hover:bg-accent shadow-md">
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
+              </li>
+              <li className="z-40">
+                <button className="py-1 px-2 rounded bg-border hover:bg-accent hover:text-buttonText shadow-md">
+                  <FontAwesomeIcon icon={faChartLine} />
+                </button>
+              </li>
+              <li className="z-40">
+                <button
+                  className="py-1 px-2 rounded bg-error shadow-md hover:text-buttonText"
+                  onClick={() =>
+                    handleDeleteVenue(venue.id, userData.accessToken)
+                  }
+                >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              </li>
+            </ul>
           </li>
         ))}
       </ul>

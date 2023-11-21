@@ -20,10 +20,11 @@ CreateVenueForm.propTypes = {
   userData: PropTypes.shape({
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
+  isOpen: PropTypes.bool,
   setIsOpen: PropTypes.func,
 };
 
-export default function CreateVenueForm({ userData, setIsOpen }) {
+export default function CreateVenueForm({ userData, isOpen, setIsOpen }) {
   const [wifi, setWifi] = useState(false);
   const [parking, setParking] = useState(false);
   const [pets, setPets] = useState(false);
@@ -65,6 +66,7 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
         postData(data, userData.accessToken)
       );
       if (response.ok) {
+        console.log(response);
         reset();
         setIsOpen(false);
         return await response.json();
@@ -79,7 +81,11 @@ export default function CreateVenueForm({ userData, setIsOpen }) {
   };
 
   return (
-    <div className="m-auto rounded bg-background shadow-lg lg:w-[850px] p-5 z-50">
+    <div
+      className={`rounded bg-background shadow-lg lg:w-[850px] p-5 z-50 absolute left-0 right-0 m-auto ${
+        isOpen ? "backdrop-blur" : ""
+      }`}
+    >
       <div className="flex flex-col gap-3">
         <div className="flex justify-between">
           <h1 className="font-heading md:text-2xl font-bold">
