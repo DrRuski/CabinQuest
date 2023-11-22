@@ -6,6 +6,7 @@ import { deleteData } from "../../../data/headers/deleteData";
 import { BookingsContext } from "../../../context/context";
 import { getProfileContents } from "../../../data/headers/getProfileContents";
 import { API_BASE_URL, DELETE_BOOKING, PROFILE } from "../../../data/url/url";
+import formatDate from "../../../misc/formatDate";
 
 UserBookings.propTypes = {
   userData: PropTypes.object,
@@ -13,15 +14,6 @@ UserBookings.propTypes = {
 
 export default function UserBookings({ userData }) {
   const { bookings, setBookings } = useContext(BookingsContext);
-
-  function formatDate(oldDate) {
-    const newDate = new Date(oldDate);
-    return newDate.toLocaleString("en-EU", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  }
 
   useEffect(() => {
     const controller = new AbortController();

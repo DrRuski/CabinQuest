@@ -16,15 +16,17 @@ OwnedVenuesList.propTypes = {
   userData: PropTypes.object,
   isOpen: PropTypes.bool,
   setIsOpen: PropTypes.func,
+  setStatsOpen: PropTypes.func,
+  setVenueStats: PropTypes.func,
 };
 
-export default function OwnedVenuesList({ userData, setIsOpen }) {
+export default function OwnedVenuesList({
+  userData,
+  setIsOpen,
+  setStatsOpen,
+  setVenueStats,
+}) {
   const [ownedVenues, setOwnedVenues] = useState([]);
-  const [statsOpen, setStatsOpen] = useState(false);
-
-  const handleImageError = (e) => {
-    e.target.src = "/src/assets/images/imageNotFound.png";
-  };
 
   // function formatDate(oldDate) {
   //   const newDate = new Date(oldDate);
@@ -40,7 +42,7 @@ export default function OwnedVenuesList({ userData, setIsOpen }) {
     async function getOwnedVenues() {
       try {
         const response = await getProfileContents(
-          `${API_BASE_URL}${PROFILE}${userData.name}/venues`,
+          `${API_BASE_URL}${PROFILE}${userData.name}/venues?_bookings=true`,
           userData.accessToken,
           controller
         );
@@ -54,9 +56,18 @@ export default function OwnedVenuesList({ userData, setIsOpen }) {
     getOwnedVenues();
   }, [userData.name, userData.accessToken, setOwnedVenues]);
 
+  const handleImageError = (e) => {
+    e.target.src = "/src/assets/images/imageNotFound.png";
+  };
+
   function handleDeleteVenue(id, accessToken) {
     setOwnedVenues((venues) => venues.filter((venue) => venue.id !== id));
     deleteData(`${API_BASE_URL}${DELETE_VENUE}${id}`, accessToken);
+  }
+
+  function handleViewVenueStats(venue) {
+    setVenueStats(venue);
+    setStatsOpen(true);
   }
 
   return (
@@ -100,17 +111,20 @@ export default function OwnedVenuesList({ userData, setIsOpen }) {
               </div>
             </div>
             <ul className="flex gap-2 absolute right-2 top-2">
-              <li className="z-40">
+              <li className="z-30">
                 <button className="py-1 px-2 rounded text-buttonText bg-primary hover:bg-accent shadow-md">
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
               </li>
-              <li className="z-40">
-                <button className="py-1 px-2 rounded bg-border hover:bg-accent hover:text-buttonText shadow-md">
+              <li className="z-30">
+                <button
+                  onClick={() => handleViewVenueStats(venue)}
+                  className="py-1 px-2 rounded bg-border hover:bg-accent hover:text-buttonText shadow-md"
+                >
                   <FontAwesomeIcon icon={faChartLine} />
                 </button>
               </li>
-              <li className="z-40">
+              <li className="z-30">
                 <button
                   className="py-1 px-2 rounded bg-error shadow-md hover:text-buttonText"
                   onClick={() =>
@@ -126,8 +140,4 @@ export default function OwnedVenuesList({ userData, setIsOpen }) {
       </ul>
     </div>
   );
-}
-
-function StatsScreen({ venue }) {
-  return <div className="absolute right-0 left-0 m-auto">Hello</div>;
 }
