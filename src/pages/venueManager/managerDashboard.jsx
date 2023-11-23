@@ -3,11 +3,15 @@ import { UserContext } from "../../context/context";
 import CreateVenueForm from "./createVenueForm/createVenueForm";
 import OwnedVenuesList from "./ownedVenuesList/ownedVenuesList";
 import StatsScreen from "./venueStats/venueStats";
+import UpdateVenueForm from "./updateVenueForm/updateVenueForm";
 
 export default function ManagerDashboard() {
+  const [ownedVenues, setOwnedVenues] = useState([]);
   const [venueStats, setVenueStats] = useState({});
+  const [venue, setVenue] = useState({});
   const [statsOpen, setStatsOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
   const { userData } = useContext(UserContext);
 
   document.title = "Dashboard";
@@ -27,15 +31,32 @@ export default function ManagerDashboard() {
         {statsOpen && (
           <StatsScreen venueStats={venueStats} setStatsOpen={setStatsOpen} />
         )}
-        {isOpen && (
-          <CreateVenueForm userData={userData} setIsOpen={setIsOpen} />
+        {createOpen && (
+          <CreateVenueForm
+            userData={userData}
+            setCreateOpen={setCreateOpen}
+            setOwnedVenues={setOwnedVenues}
+          />
+        )}
+        {updateOpen && (
+          <UpdateVenueForm
+            userData={userData}
+            setUpdateOpen={setUpdateOpen}
+            ownedVenues={ownedVenues}
+            setOwnedVenues={setOwnedVenues}
+            venue={venue}
+          />
         )}
         <OwnedVenuesList
+          setOwnedVenues={setOwnedVenues}
           userData={userData}
-          setIsOpen={setIsOpen}
           statsOpen={statsOpen}
           setStatsOpen={setStatsOpen}
           setVenueStats={setVenueStats}
+          setCreateOpen={setCreateOpen}
+          setUpdateOpen={setUpdateOpen}
+          ownedVenues={ownedVenues}
+          setVenue={setVenue}
         />
       </div>
     </section>

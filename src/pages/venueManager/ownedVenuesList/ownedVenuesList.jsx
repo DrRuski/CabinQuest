@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getProfileContents } from "../../../data/headers/getProfileContents";
 import { API_BASE_URL, DELETE_VENUE, PROFILE } from "../../../data/url/url";
 import { deleteData } from "../../../data/headers/deleteData";
@@ -15,28 +15,25 @@ import { capitalize } from "../../../misc/capitalize";
 OwnedVenuesList.propTypes = {
   userData: PropTypes.object,
   isOpen: PropTypes.bool,
-  setIsOpen: PropTypes.func,
+  setCreateOpen: PropTypes.func,
   setStatsOpen: PropTypes.func,
   setVenueStats: PropTypes.func,
+  setUpdateOpen: PropTypes.func,
+  setVenue: PropTypes.func,
+  ownedVenues: PropTypes.array,
+  setOwnedVenues: PropTypes.func,
 };
 
 export default function OwnedVenuesList({
   userData,
-  setIsOpen,
+  setCreateOpen,
   setStatsOpen,
   setVenueStats,
+  setUpdateOpen,
+  setVenue,
+  ownedVenues,
+  setOwnedVenues,
 }) {
-  const [ownedVenues, setOwnedVenues] = useState([]);
-
-  // function formatDate(oldDate) {
-  //   const newDate = new Date(oldDate);
-  //   return newDate.toLocaleString("en-EU", {
-  //     year: "numeric",
-  //     month: "long",
-  //     day: "numeric",
-  //   });
-  // }
-
   useEffect(() => {
     const controller = new AbortController();
     async function getOwnedVenues() {
@@ -60,6 +57,11 @@ export default function OwnedVenuesList({
     e.target.src = "/src/assets/images/imageNotFound.png";
   };
 
+  function handleUpdateVenue(venue) {
+    setVenue(venue);
+    setUpdateOpen((open) => !open);
+  }
+
   function handleDeleteVenue(id, accessToken) {
     setOwnedVenues((venues) => venues.filter((venue) => venue.id !== id));
     deleteData(`${API_BASE_URL}${DELETE_VENUE}${id}`, accessToken);
@@ -76,7 +78,7 @@ export default function OwnedVenuesList({
         <button
           type="button"
           className="flex justify-center items-center border border-border border-dashed gap-2 shadow rounded text-text hover:bg-secondary hover:shadow-xl min-h-[362px]"
-          onClick={() => setIsOpen((open) => !open)}
+          onClick={() => setCreateOpen((open) => !open)}
         >
           <FontAwesomeIcon icon={faPlus} />
           <p>Create New Venue</p>
@@ -106,13 +108,16 @@ export default function OwnedVenuesList({
                   <span>
                     {capitalize(venue.location.city)} {venue.location.zip},
                   </span>
-                  <span>{venue.location.country}</span>
+                  <span>{capitalize(venue.location.country)}</span>
                 </p>
               </div>
             </div>
             <ul className="flex gap-2 absolute right-2 top-2">
               <li className="z-30">
-                <button className="py-1 px-2 rounded text-buttonText bg-primary hover:bg-accent shadow-md">
+                <button
+                  onClick={() => handleUpdateVenue(venue)}
+                  className="py-1 px-2 rounded text-buttonText bg-primary hover:bg-accent shadow-md"
+                >
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
               </li>

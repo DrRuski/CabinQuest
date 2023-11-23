@@ -14,13 +14,6 @@ export default function VenueDetails() {
     e.target.src = "/src/assets/images/imageNotFound.png";
   };
 
-  // const getDates = async (data) => {
-  //   await data?.bookings.map((date) => {
-  //     console.log(date.dateFrom);
-  //   });
-  // };
-  // getDates(data);
-
   return (
     <section className="container mx-auto">
       {isLoading ? (

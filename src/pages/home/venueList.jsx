@@ -7,10 +7,10 @@ import {
   faBreadSlice,
   faParking,
   faPaw,
-  faStar,
   faWifi,
 } from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "../../misc/capitalize";
+import StarRating from "../../misc/StarRating";
 
 VenueList.propTypes = {
   venueData: PropTypes.array,
@@ -76,16 +76,9 @@ VenueHeading.propTypes = {
 
 function VenueHeading({ venue }) {
   return (
-    <div className="flex justify-between flex-wrap">
-      <h3 className="font-heading font-bold text-base md:text-xl">
-        {venue.name}
-      </h3>
-      <p className="flex items-center gap-2 rounded">
-        <span>
-          <FontAwesomeIcon icon={faStar} />
-        </span>
-        {venue.rating}
-      </p>
+    <div className="flex justify-between items-start gap-2">
+      <h3 className="font-heading font-bold text-base">{venue.name}</h3>
+      <StarRating rating={venue.rating} maxRating={1} />
     </div>
   );
 }

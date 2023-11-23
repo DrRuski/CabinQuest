@@ -1,9 +1,9 @@
 import Form from "../../../components/common/form/form";
 import PropTypes from "prop-types";
 import { useFieldArray, useForm } from "react-hook-form";
-import { postData } from "../../../data/headers/postData";
 import { API_BASE_URL, VENUES_ENDPOINT } from "../../../data/url/url";
 import { useState } from "react";
+import { putData } from "../../../data/headers/putData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBreadSlice,
@@ -16,39 +16,46 @@ import {
 import FormInput from "../../../components/common/form/formInput";
 import FormTextArea from "../../../components/common/form/formTextArea";
 
-CreateVenueForm.propTypes = {
+UpdateVenueForm.propTypes = {
   userData: PropTypes.shape({
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
-  setCreateOpen: PropTypes.func,
+  setUpdateOpen: PropTypes.func,
   setOwnedVenues: PropTypes.func,
+  venue: PropTypes.object,
+  ownedVenues: PropTypes.array,
 };
 
-export default function CreateVenueForm({
+export default function UpdateVenueForm({
   userData,
-  setCreateOpen,
+  setUpdateOpen,
+  venue,
   setOwnedVenues,
+  ownedVenues,
 }) {
-  const [wifi, setWifi] = useState(false);
-  const [parking, setParking] = useState(false);
-  const [pets, setPets] = useState(false);
-  const [breakfast, setBreakfast] = useState(false);
+  const [wifi, setWifi] = useState(venue.meta.wifi);
+  const [parking, setParking] = useState(venue.meta.parking);
+  const [pets, setPets] = useState(venue.meta.pets);
+  const [breakfast, setBreakfast] = useState(venue.meta.breakfast);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-    reset,
   } = useForm({
     defaultValues: {
-      media: [],
+      name: venue.name,
+      description: venue.description,
+      price: venue.price,
+      maxGuests: venue.maxGuests,
+      media: [...venue.media],
       location: {
-        city: "",
-        address: "",
-        country: "",
-        zip: "",
-        continent: "",
+        city: venue.location.city,
+        address: venue.location.address,
+        country: venue.location.country,
+        zip: venue.location.zip,
+        continent: venue.location.continent,
         lat: Number,
         lng: Number,
       },
@@ -65,17 +72,17 @@ export default function CreateVenueForm({
 
   const onSubmit = async (data) => {
     try {
-      const response = await postData(
-        `${API_BASE_URL}${VENUES_ENDPOINT}`,
+      const response = await putData(
+        `${API_BASE_URL}${VENUES_ENDPOINT}/${venue.id}`,
         data,
         userData.accessToken
       );
-
       if (response.ok) {
-        const newVenue = await response.json();
-        reset();
-        setCreateOpen(false);
-        setOwnedVenues((prevVenues) => [...prevVenues, newVenue]);
+        const updatedVenue = await response.json();
+        setUpdateOpen(false);
+        setOwnedVenues(
+          ownedVenues.map((v) => (v.id === venue.id ? updatedVenue : v))
+        );
       } else {
         console.log(response);
         throw new Error("Error Description", response.message);
@@ -90,8 +97,8 @@ export default function CreateVenueForm({
     <div className="rounded bg-background shadow-lg lg:w-[850px] p-5 z-50 absolute left-0 right-0 m-auto">
       <div className="flex flex-col gap-3">
         <div className="flex justify-between">
-          <h1 className="font-heading md:text-2xl font-bold">Create Venue</h1>
-          <button onClick={() => setCreateOpen((open) => !open)}>❌</button>
+          <h1 className="font-heading md:text-2xl font-bold">Update Venue</h1>
+          <button onClick={() => setUpdateOpen((open) => !open)}>❌</button>
         </div>
         <hr className="border border-border" />
         <Form
@@ -325,7 +332,7 @@ export default function CreateVenueForm({
 
           <input
             type="submit"
-            value="Publish Venue"
+            value="Update Venue"
             className="flex justify-center items-center gap-3 shadow-md rounded bg-primary p-3 text-buttonText hover:bg-accent cursor-pointer"
           />
         </Form>

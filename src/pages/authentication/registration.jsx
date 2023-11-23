@@ -22,9 +22,9 @@ export default function Registration({ setIsOpen }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(
+      const response = await postData(
         `${API_BASE_URL}/holidaze/auth/register`,
-        postData(data)
+        data
       );
 
       if (response.ok) {

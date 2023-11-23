@@ -21,10 +21,11 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(
+      const response = await postData(
         `${API_BASE_URL}/holidaze/auth/login`,
-        postData(data)
+        data
       );
+
       if (response.ok) {
         const responseData = await response.json();
         setUserData(responseData);
