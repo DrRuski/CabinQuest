@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
-import { getProfileContents } from "../../../data/headers/getProfileContents";
-import { API_BASE_URL, DELETE_VENUE, PROFILE } from "../../../data/url/url";
+import { API_BASE_URL, DELETE_VENUE } from "../../../data/url/url";
 import { deleteData } from "../../../data/headers/deleteData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,6 +11,8 @@ import {
 import { capitalize } from "../../../misc/capitalize";
 
 OwnedVenuesList.propTypes = {
+  data: PropTypes.array,
+  setData: PropTypes.func,
   userData: PropTypes.object,
   isOpen: PropTypes.bool,
   setCreateOpen: PropTypes.func,
@@ -20,39 +20,18 @@ OwnedVenuesList.propTypes = {
   setVenueStats: PropTypes.func,
   setUpdateOpen: PropTypes.func,
   setVenue: PropTypes.func,
-  ownedVenues: PropTypes.array,
-  setOwnedVenues: PropTypes.func,
 };
 
 export default function OwnedVenuesList({
+  data,
+  setData,
   userData,
   setCreateOpen,
   setStatsOpen,
   setVenueStats,
   setUpdateOpen,
   setVenue,
-  ownedVenues,
-  setOwnedVenues,
 }) {
-  useEffect(() => {
-    const controller = new AbortController();
-    async function getOwnedVenues() {
-      try {
-        const response = await getProfileContents(
-          `${API_BASE_URL}${PROFILE}${userData.name}/venues?_bookings=true`,
-          userData.accessToken,
-          controller
-        );
-        if (response.ok) {
-          setOwnedVenues(await response.json());
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getOwnedVenues();
-  }, [userData.name, userData.accessToken, setOwnedVenues]);
-
   const handleImageError = (e) => {
     e.target.src = "/src/assets/images/imageNotFound.png";
   };
@@ -62,9 +41,9 @@ export default function OwnedVenuesList({
     setUpdateOpen((open) => !open);
   }
 
-  function handleDeleteVenue(id, accessToken) {
-    setOwnedVenues((venues) => venues.filter((venue) => venue.id !== id));
-    deleteData(`${API_BASE_URL}${DELETE_VENUE}${id}`, accessToken);
+  function handleDeleteVenue(id) {
+    setData((venues) => venues?.filter((venue) => venue.id !== id));
+    deleteData(`${API_BASE_URL}${DELETE_VENUE}${id}`, userData.accessToken);
   }
 
   function handleViewVenueStats(venue) {
@@ -83,7 +62,7 @@ export default function OwnedVenuesList({
           <FontAwesomeIcon icon={faPlus} />
           <p>Create New Venue</p>
         </button>
-        {ownedVenues?.map((venue) => (
+        {data?.map((venue) => (
           <li
             className="flex flex-col h-full shadow rounded relative"
             key={venue.id}
@@ -132,9 +111,7 @@ export default function OwnedVenuesList({
               <li className="z-30">
                 <button
                   className="py-1 px-2 rounded bg-error shadow-md hover:text-buttonText"
-                  onClick={() =>
-                    handleDeleteVenue(venue.id, userData.accessToken)
-                  }
+                  onClick={() => handleDeleteVenue(venue.id)}
                 >
                   <FontAwesomeIcon icon={faTrashCan} />
                 </button>

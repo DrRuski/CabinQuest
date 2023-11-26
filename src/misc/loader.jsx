@@ -5,7 +5,7 @@ Loader.propTypes = {
 };
 
 export default function Loader({
-  className = "flex justify-center items-center",
+  className = "flex justify-center items-center h-full",
 }) {
   return (
     <div className={className}>
