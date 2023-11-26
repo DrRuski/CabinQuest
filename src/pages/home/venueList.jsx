@@ -2,13 +2,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DataContext } from "../../context/context";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBreadSlice,
-  faParking,
-  faPaw,
-  faWifi,
-} from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "../../misc/capitalize";
 import StarRating from "../../misc/StarRating";
 
@@ -97,46 +90,6 @@ function VenueLocation({ venue }) {
         <span>{venue.location.country}</span>
       </p>
     </div>
-  );
-}
-
-VenueAmenities.propTypes = {
-  venue: PropTypes.object,
-};
-
-function VenueAmenities({ venue }) {
-  return (
-    <ul className="grid grid-cols-2 gap-1">
-      <li>
-        <p className={`${venue.meta.wifi ? "font-semiBold" : "line-through"}`}>
-          <FontAwesomeIcon icon={faWifi} /> <span className="ms-1">Wifi</span>
-        </p>
-      </li>
-
-      <li>
-        <p
-          className={`${
-            venue.meta.breakfast ? "font-semiBold" : "line-through"
-          }`}
-        >
-          <FontAwesomeIcon icon={faBreadSlice} />{" "}
-          <span className="ms-1">Breakfast</span>
-        </p>
-      </li>
-      <li>
-        <p className={`${venue.meta.pets ? "font-semiBold" : "line-through"}`}>
-          <FontAwesomeIcon icon={faPaw} /> <span className="ms-1">Pets</span>
-        </p>
-      </li>
-      <li>
-        <p
-          className={`${venue.meta.parking ? "font-semiBold" : "line-through"}`}
-        >
-          <FontAwesomeIcon icon={faParking} />{" "}
-          <span className="ms-1">Parking</span>
-        </p>
-      </li>
-    </ul>
   );
 }
 
