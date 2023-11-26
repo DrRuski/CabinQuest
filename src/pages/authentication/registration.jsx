@@ -20,11 +20,12 @@ export default function Registration({ setIsOpen }) {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (userInput) => {
     try {
       const response = await postData(
         `${API_BASE_URL}/holidaze/auth/register`,
-        data
+        null,
+        userInput
       );
 
       if (response.ok) {

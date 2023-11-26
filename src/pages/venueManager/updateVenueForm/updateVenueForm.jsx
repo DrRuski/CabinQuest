@@ -21,17 +21,17 @@ UpdateVenueForm.propTypes = {
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
   setUpdateOpen: PropTypes.func,
-  setOwnedVenues: PropTypes.func,
+  setData: PropTypes.func,
   venue: PropTypes.object,
-  ownedVenues: PropTypes.array,
+  data: PropTypes.array,
 };
 
 export default function UpdateVenueForm({
+  data,
+  setData,
   userData,
-  setUpdateOpen,
   venue,
-  setOwnedVenues,
-  ownedVenues,
+  setUpdateOpen,
 }) {
   const [wifi, setWifi] = useState(venue.meta.wifi);
   const [parking, setParking] = useState(venue.meta.parking);
@@ -70,19 +70,17 @@ export default function UpdateVenueForm({
 
   const { fields, append, remove } = useFieldArray({ control, name: "media" });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (userInput) => {
     try {
       const response = await putData(
         `${API_BASE_URL}${VENUES_ENDPOINT}/${venue.id}`,
-        data,
-        userData.accessToken
+        userData.accessToken,
+        userInput
       );
       if (response.ok) {
         const updatedVenue = await response.json();
         setUpdateOpen(false);
-        setOwnedVenues(
-          ownedVenues.map((v) => (v.id === venue.id ? updatedVenue : v))
-        );
+        setData(data?.map((v) => (v.id === venue.id ? updatedVenue : v)));
       } else {
         console.log(response);
         throw new Error("Error Description", response.message);

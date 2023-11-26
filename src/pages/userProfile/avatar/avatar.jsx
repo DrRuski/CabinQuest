@@ -25,8 +25,8 @@ export default function UserAvatar({ userData, setUserData, setIsLoading }) {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const response = await putData(
         `${API_BASE_URL}${PROFILE}${userData.name}/media`,
         data,

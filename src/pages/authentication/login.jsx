@@ -19,11 +19,12 @@ export default function Login() {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (userInput) => {
     try {
       const response = await postData(
         `${API_BASE_URL}/holidaze/auth/login`,
-        data
+        null,
+        userInput
       );
 
       if (response.ok) {

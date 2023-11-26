@@ -21,14 +21,10 @@ CreateVenueForm.propTypes = {
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
   setCreateOpen: PropTypes.func,
-  setOwnedVenues: PropTypes.func,
+  setData: PropTypes.func,
 };
 
-export default function CreateVenueForm({
-  userData,
-  setCreateOpen,
-  setOwnedVenues,
-}) {
+export default function CreateVenueForm({ setData, userData, setCreateOpen }) {
   const [wifi, setWifi] = useState(false);
   const [parking, setParking] = useState(false);
   const [pets, setPets] = useState(false);
@@ -63,19 +59,19 @@ export default function CreateVenueForm({
 
   const { fields, append, remove } = useFieldArray({ control, name: "media" });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (userInput) => {
     try {
       const response = await postData(
         `${API_BASE_URL}${VENUES_ENDPOINT}`,
-        data,
-        userData.accessToken
+        userData.accessToken,
+        userInput
       );
 
       if (response.ok) {
         const newVenue = await response.json();
         reset();
         setCreateOpen(false);
-        setOwnedVenues((prevVenues) => [...prevVenues, newVenue]);
+        setData((prevVenues) => [...prevVenues, newVenue]);
       } else {
         console.log(response);
         throw new Error("Error Description", response.message);

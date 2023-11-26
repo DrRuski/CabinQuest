@@ -1,23 +1,33 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { DataContext } from "../../context/context";
 import { capitalize } from "../../misc/capitalize";
 import StarRating from "../../misc/StarRating";
-
-VenueList.propTypes = {
-  venueData: PropTypes.array,
-};
+import useDynamicFetch from "../../data/useDynamicFetch";
+import {
+  API_BASE_URL,
+  QUERY_PARAMS,
+  VENUES_ENDPOINT,
+  VENUE_LIMITER,
+} from "../../data/url/url";
+import Loader from "../../misc/loader";
+import { getData } from "../../data/headers/getData";
 
 export default function VenueList() {
-  const { data } = useContext(DataContext);
-
+  const { data, isLoading } = useDynamicFetch(
+    `${API_BASE_URL}${VENUES_ENDPOINT}?${VENUE_LIMITER}&${QUERY_PARAMS}`,
+    getData
+  );
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {data?.map((venue) => (
-        <VenueListing key={venue.id} venue={venue} />
-      ))}
-    </ul>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {data?.map((venue) => (
+            <VenueListing key={venue.id} venue={venue} />
+          ))}
+        </ul>
+      )}
+    </>
   );
 }
 

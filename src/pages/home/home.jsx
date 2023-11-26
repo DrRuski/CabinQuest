@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import Loader from "../../misc/loader";
 import VenueList from "./venueList";
 
 Home.propTypes = {
@@ -7,12 +6,12 @@ Home.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-export default function Home({ isLoading }) {
+export default function Home() {
   document.title = "Home";
 
   return (
     <section className="container mx-auto px-3 md:px-0">
-      {isLoading ? <Loader className="h-full" /> : <VenueList />}
+      <VenueList />
     </section>
   );
 }

@@ -22,12 +22,12 @@ export default function UserInformation({ userData, setUserData }) {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (userInput) => {
     try {
       const response = await putData(
         `${API_BASE_URL}${PROFILE}${userData.name}`,
-        data,
-        userData.accessToken
+        userData.accessToken,
+        userInput
       );
 
       if (response.ok) {

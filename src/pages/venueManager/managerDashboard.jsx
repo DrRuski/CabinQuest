@@ -4,15 +4,26 @@ import CreateVenueForm from "./createVenueForm/createVenueForm";
 import OwnedVenuesList from "./ownedVenuesList/ownedVenuesList";
 import StatsScreen from "./venueStats/venueStats";
 import UpdateVenueForm from "./updateVenueForm/updateVenueForm";
+import { API_BASE_URL, PROFILE } from "../../data/url/url";
+
+import useDynamicFetch from "../../data/useDynamicFetch";
+import { getData } from "../../data/headers/getData";
 
 export default function ManagerDashboard() {
-  const [ownedVenues, setOwnedVenues] = useState([]);
+  const { userData } = useContext(UserContext);
+  const { data, setData } = useDynamicFetch(
+    `${API_BASE_URL}${PROFILE}${userData.name}/venues?_bookings=true`,
+    getData,
+    userData.accessToken
+  );
+  //
   const [venueStats, setVenueStats] = useState({});
-  const [venue, setVenue] = useState({});
   const [statsOpen, setStatsOpen] = useState(false);
+  //
+  const [venue, setVenue] = useState({});
+  //
   const [updateOpen, setUpdateOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
-  const { userData } = useContext(UserContext);
 
   document.title = "Dashboard";
 
@@ -35,27 +46,27 @@ export default function ManagerDashboard() {
           <CreateVenueForm
             userData={userData}
             setCreateOpen={setCreateOpen}
-            setOwnedVenues={setOwnedVenues}
+            setData={setData}
           />
         )}
         {updateOpen && (
           <UpdateVenueForm
+            data={data}
+            setData={setData}
             userData={userData}
             setUpdateOpen={setUpdateOpen}
-            ownedVenues={ownedVenues}
-            setOwnedVenues={setOwnedVenues}
             venue={venue}
           />
         )}
         <OwnedVenuesList
-          setOwnedVenues={setOwnedVenues}
+          data={data}
+          setData={setData}
           userData={userData}
           statsOpen={statsOpen}
           setStatsOpen={setStatsOpen}
           setVenueStats={setVenueStats}
           setCreateOpen={setCreateOpen}
           setUpdateOpen={setUpdateOpen}
-          ownedVenues={ownedVenues}
           setVenue={setVenue}
         />
       </div>
