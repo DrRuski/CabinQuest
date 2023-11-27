@@ -55,7 +55,7 @@ function AuthLogo() {
     <div className="flex flex-col items-center justify-center p-1 gap-2">
       <img
         className="object-cover aspect-square w-[200px]"
-        src="src/assets/images/cabinQSvg.svg"
+        src="assets/images/cabinQSvg.svg"
         alt=""
       />
       <h1 className="text-center font-heading font-semiBold">

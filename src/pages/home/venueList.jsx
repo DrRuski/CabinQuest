@@ -39,7 +39,7 @@ VenueListing.propTypes = {
 
 function VenueListing({ venue }) {
   const handleImageError = (e) => {
-    e.target.src = "/src/assets/images/imageNotFound.png";
+    e.target.src = "assets/images/imageNotFound.png";
   };
 
   return (
@@ -52,9 +52,7 @@ function VenueListing({ venue }) {
           <img
             className="object-cover aspect-square rounded-t w-full h-full"
             src={
-              venue.media
-                ? venue.media[0]
-                : "/src/assets/images/imageNotFound.png"
+              venue.media ? venue.media[0] : "assets/images/imageNotFound.png"
             }
             alt={venue.name}
             onError={handleImageError}

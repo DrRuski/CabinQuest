@@ -33,7 +33,7 @@ export default function OwnedVenuesList({
   setVenue,
 }) {
   const handleImageError = (e) => {
-    e.target.src = "/src/assets/images/imageNotFound.png";
+    e.target.src = "assets/images/imageNotFound.png";
   };
 
   function handleUpdateVenue(venue) {
@@ -73,7 +73,7 @@ export default function OwnedVenuesList({
                 src={
                   venue.media
                     ? venue.media[0]
-                    : "/src/assets/images/imageNotFound.png"
+                    : "assets/images/imageNotFound.png"
                 }
                 alt={venue.name}
                 onError={handleImageError}
