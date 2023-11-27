@@ -82,17 +82,19 @@ function ImageGridDisplay({ venue }) {
     <div className="grid grid-cols-1 md:grid-cols-6 gap-1 md:gap-3">
       <div className="md:col-span-6 md:row-span-2">
         <img
-          className="w-full h-full object-cover aspect-4/3"
+          className="w-full h-full object-cover aspect-4/3 rounded"
           src={selectedImage}
-          alt="Selected Venue"
+          alt={`Venue ${selectedImage}`}
           onError={handleImageError}
         />
       </div>
       {venue?.map((image, index) => (
         <div key={index} className="md:col-span-1 md:row-span-1 cursor-pointer">
           <img
-            className={`w-full h-full object-cover aspect-square ${
-              image === selectedImage ? "ring-2 ring-offset-2 ring-accent" : ""
+            className={`w-full h-full object-cover aspect-square rounded ${
+              image === selectedImage
+                ? "ring-2 ring-offset-2 ring-accent"
+                : "opacity-50"
             }`}
             src={image}
             alt={`Venue ${index}`}

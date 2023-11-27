@@ -24,8 +24,8 @@ export default function useDynamicFetch(
           token,
           dataContent
         );
-        const result = await response.json();
         if (response.ok) {
+          const result = await response.json();
           setData(result);
         }
       } catch (error) {
