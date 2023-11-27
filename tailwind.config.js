@@ -2,13 +2,22 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      aspectRatio: {
+        "4/3": "4 / 3",
+      },
+    },
     colors: {
       text: "var(--text)",
       background: "var(--background)",
       primary: "var(--primary)",
       secondary: "var(--secondary)",
       accent: "var(--accent)",
+      border: "#dededede",
+      buttonText: "#fdfefb",
+      link: "#362FD9",
+      warning: "#FFA559",
+      error: "#E74646",
     },
     fontSize: {
       sm: "0.750rem",
@@ -20,11 +29,12 @@ export default {
       "5xl": "4.210rem",
     },
     fontFamily: {
-      heading: "Roboto",
-      body: "Roboto",
+      heading: ["Roboto", "sans-serif"],
+      body: ["Roboto", "sans-serif"],
     },
     fontWeight: {
       normal: "400",
+      semiBold: "600",
       bold: "700",
     },
   },
