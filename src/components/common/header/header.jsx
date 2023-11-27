@@ -62,7 +62,7 @@ function NavBar() {
       <NavLink to="/" className="cursor-pointer">
         <img
           className="block object-cover aspect-square"
-          src="/src/assets/images/cabinQSvg.svg"
+          src="src/assets/images/cabinQSvg.svg"
           alt="CabinQuest"
         />
       </NavLink>
