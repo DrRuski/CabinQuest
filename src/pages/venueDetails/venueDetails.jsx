@@ -23,6 +23,7 @@ import {
   faWifi,
 } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "../../misc/StarRating";
+import { useEffect, useState } from "react";
 
 export default function VenueDetails() {
   // const { userData } = useContext(UserContext);
@@ -34,15 +35,15 @@ export default function VenueDetails() {
   );
   document.title = `${data?.name}`;
 
-  console.log(data);
-
   return (
     <section className="container mx-auto px-3 md:px-0">
       {isLoading && <Loader />}
       {!isLoading && (
-        <div className="flex flex-col md:flex-row gap-6 md:gap-[100px] justify-center">
-          <ImageGridDisplay venue={data?.media} />
-          <div className="flex flex-col gap-4 md:w-[600px]">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-[50px]">
+          <div className="flex-1">
+            <ImageGridDisplay venue={data?.media} />
+          </div>
+          <div className="flex flex-col gap-4 flex-1">
             <VenueDescription venue={data} />
             <div className="flex flex-col md:flex-row gap-4">
               <VenuePricing venue={data} />
@@ -61,26 +62,45 @@ ImageGridDisplay.propTypes = {
 };
 
 function ImageGridDisplay({ venue }) {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    if (venue && venue.length > 0) {
+      setSelectedImage(venue[0]);
+    }
+  }, [venue]);
+
   const handleImageError = (e) => {
     e.target.src = "/src/assets/images/imageNotFound.png";
   };
 
+  function handleImageClick(image) {
+    setSelectedImage(image);
+  }
+
   return (
-    <div>
-      <ul className="grid grid-cols-3 gap-1">
-        {venue?.map((image, index) => {
-          return (
-            <li key={index}>
-              <img
-                className="w-full object-cover"
-                src={image}
-                alt=""
-                onError={handleImageError}
-              />
-            </li>
-          );
-        })}
-      </ul>
+    <div className="grid grid-cols-1 md:grid-cols-6 gap-1 md:gap-3">
+      <div className="md:col-span-6 md:row-span-2">
+        <img
+          className="w-full h-full object-cover aspect-4/3"
+          src={selectedImage}
+          alt="Selected Venue"
+          onError={handleImageError}
+        />
+      </div>
+      {venue?.map((image, index) => (
+        <div key={index} className="md:col-span-1 md:row-span-1 cursor-pointer">
+          <img
+            className={`w-full h-full object-cover aspect-square ${
+              image === selectedImage ? "ring-2 ring-offset-2 ring-accent" : ""
+            }`}
+            src={image}
+            alt={`Venue ${index}`}
+            onError={handleImageError}
+            onClick={() => handleImageClick(image)}
+          />
+        </div>
+      ))}
     </div>
   );
 }
@@ -177,7 +197,6 @@ VenueAmenities.propTypes = {
 };
 
 function VenueAmenities({ venue }) {
-  console.log(venue?.pets);
   return (
     <div className="flex flex-col gap-3 shadow rounded p-3 border border-border">
       <h2 className="font-bold">Venue Amenities</h2>
