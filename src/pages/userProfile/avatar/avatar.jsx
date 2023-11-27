@@ -24,13 +24,13 @@ export default function UserAvatar({ userData, setUserData, setIsLoading }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (userInput) => {
     setIsLoading(true);
     try {
       const response = await putData(
         `${API_BASE_URL}${PROFILE}${userData.name}/media`,
-        data,
-        userData.accessToken
+        userData.accessToken,
+        userInput
       );
       if (response.ok) {
         const updateAvatar = await response.json();

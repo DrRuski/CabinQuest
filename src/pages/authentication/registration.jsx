@@ -11,6 +11,7 @@ Registration.propTypes = {
 };
 
 export default function Registration({ setIsOpen }) {
+  const [error, setError] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
 
   const {
@@ -29,7 +30,6 @@ export default function Registration({ setIsOpen }) {
       );
 
       if (response.ok) {
-        console.log(response);
         setAuthenticated(true);
         reset();
         setTimeout(() => {
@@ -39,8 +39,11 @@ export default function Registration({ setIsOpen }) {
         return await response.json();
       } else {
         const errorData = await response.json();
-        console.error("Registration failed:", errorData.message);
-        throw new Error("Registration failed:", errorData.message);
+        setError(errorData.errors);
+        setTimeout(() => {
+          reset();
+          setError(null);
+        }, 3000);
       }
     } catch (error) {
       console.error("Network error:", error.message);
@@ -91,12 +94,20 @@ export default function Registration({ setIsOpen }) {
 
         <input
           type="submit"
-          value={authenticated ? "Creating Account..." : "Create Account"}
-          className={`rounded  p-2 text-buttonText font-normal   cursor-pointer ${
-            authenticated
-              ? "bg-secondary shadow-lg shadow-primary"
-              : "bg-primary shadow-md hover:bg-accent"
-          }`}
+          value={
+            error
+              ? error[0].message
+              : `${authenticated ? "Creating Account..." : "Create Account"}`
+          }
+          className={
+            error
+              ? `rounded p-2 text-buttonText font-normal cursor-pointer bg-error`
+              : `rounded p-2 text-buttonText font-normal cursor-pointer ${
+                  authenticated
+                    ? "bg-accent shadow-lg shadow-primary"
+                    : "bg-primary shadow-md hover:bg-accent"
+                }`
+          }
         />
       </Form>
     </div>

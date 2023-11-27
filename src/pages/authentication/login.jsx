@@ -9,6 +9,7 @@ import { postData } from "../../data/headers/postData";
 
 export default function Login() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [error, setError] = useState(null);
   const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -28,23 +29,25 @@ export default function Login() {
       );
 
       if (response.ok) {
-        const responseData = await response.json();
-        setUserData(responseData);
+        const result = await response.json();
+        setUserData(result);
         setAuthenticated(true);
         reset();
         setTimeout(() => {
           setAuthenticated(false);
         }, 1000);
+        navigate("/");
       } else {
         const errorData = await response.json();
-        console.error("Login failed:", errorData.message);
-        throw new Error("Login failed:", errorData.message);
+        setError(errorData.errors);
+        setTimeout(() => {
+          reset();
+          setError(null);
+        }, 3000);
       }
     } catch (error) {
       console.error("Network error:", error.message);
       throw new Error("Network error:", error.message);
-    } finally {
-      navigate("/");
     }
   };
   return (
@@ -76,21 +79,23 @@ export default function Login() {
           errors={errors}
           className="ps-2 rounded shadow h-8 outline-none focus:shadow-md focus:shadow-primary hover:shadow-primary"
         />
-        <a
-          className="text-sm underline opacity-50 hover:text-link w-fit"
-          href="#"
-        >
-          Forgot Password?
-        </a>
 
         <input
           type="submit"
-          value={authenticated ? "Redirecting..." : "Login"}
-          className={`rounded p-2 text-buttonText font-normal cursor-pointer ${
-            authenticated
-              ? "bg-secondary shadow-lg shadow-primary"
-              : "bg-primary shadow-md hover:bg-accent"
-          }`}
+          value={
+            error
+              ? error[0].message
+              : `${authenticated ? "Redirecting..." : "Login"}`
+          }
+          className={
+            error
+              ? `rounded p-2 text-buttonText font-normal cursor-pointer bg-error`
+              : `rounded p-2 text-buttonText font-normal cursor-pointer ${
+                  authenticated
+                    ? "bg-secondary shadow-lg shadow-primary"
+                    : "bg-primary shadow-md hover:bg-accent"
+                }`
+          }
         />
       </Form>
     </div>
