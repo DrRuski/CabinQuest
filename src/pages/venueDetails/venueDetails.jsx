@@ -13,8 +13,14 @@ import { getData } from "../../data/headers/getData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressBook } from "@fortawesome/free-regular-svg-icons";
 import {
+  faBreadSlice,
   faEarthAmericas,
   faMapLocation,
+  faMoneyBill,
+  faParking,
+  faPaw,
+  faPeopleGroup,
+  faWifi,
 } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "../../misc/StarRating";
 
@@ -36,9 +42,13 @@ export default function VenueDetails() {
       {!isLoading && (
         <div className="flex flex-col md:flex-row gap-6 md:gap-[100px] justify-center">
           <ImageGridDisplay venue={data?.media} />
-          <div className="flex flex-col gap-6 md:w-[600px]">
+          <div className="flex flex-col gap-4 md:w-[600px]">
             <VenueDescription venue={data} />
-            <VenueLocation venue={data?.location} />
+            <div className="flex flex-col md:flex-row gap-4">
+              <VenuePricing venue={data} />
+              <VenueLocation venue={data?.location} />
+            </div>
+            <VenueAmenities venue={data?.meta} />
           </div>
         </div>
       )}
@@ -54,14 +64,15 @@ function ImageGridDisplay({ venue }) {
   const handleImageError = (e) => {
     e.target.src = "/src/assets/images/imageNotFound.png";
   };
+
   return (
     <div>
-      <ul className="grid grid-cols-3 md:w-[500px]">
+      <ul className="grid grid-cols-3 gap-1">
         {venue?.map((image, index) => {
           return (
             <li key={index}>
               <img
-                className="w-full object-cover aspect-square"
+                className="w-full object-cover"
                 src={image}
                 alt=""
                 onError={handleImageError}
@@ -83,7 +94,7 @@ function VenueDescription({ venue }) {
     e.target.src = "/src/assets/images/imageNotFound.png";
   };
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-5">
       <div className="flex gap-3 items-center">
         <img
           className="w-6 object-cover aspect-square rounded"
@@ -103,22 +114,43 @@ function VenueDescription({ venue }) {
           <StarRating
             rating={venue?.rating}
             color="#36ab47"
-            className="flex items-center gap-3 shadow rounded p-2 border border-border"
+            className="flex items-center gap-3 shadow-sm rounded px-2 py-1 border border-border"
           />
         </div>
-        <p>{venue?.description}</p>
+        <p className="md:leading-7">{venue?.description}</p>
       </div>
     </div>
   );
 }
 
+VenuePricing.propTypes = {
+  venue: PropTypes.object,
+};
+
+function VenuePricing({ venue }) {
+  return (
+    <div className="flex flex-col gap-3 shadow rounded p-3 border border-border flex-1">
+      <h2 className="font-bold">Venue Pricing and Accommodations</h2>
+      <div className="flex flex-col gap-3">
+        <p className="flex gap-3 items-center">
+          <FontAwesomeIcon icon={faMoneyBill} />
+          <span>${venue?.price} / night</span>
+        </p>
+        <p className="flex gap-3 items-center">
+          <FontAwesomeIcon icon={faPeopleGroup} />
+          <span>{venue?.maxGuests}</span>
+        </p>
+      </div>
+    </div>
+  );
+}
 VenueLocation.propTypes = {
   venue: PropTypes.object,
 };
 
 function VenueLocation({ venue }) {
   return (
-    <div className="flex flex-col gap-3 shadow-md rounded p-3 border border-border">
+    <div className="flex flex-col gap-3 shadow rounded p-3 border border-border flex-1">
       <h2 className="font-bold">Venue Location</h2>
       <div className="flex flex-col gap-3">
         <p className="flex gap-3 items-center">
@@ -136,6 +168,56 @@ function VenueLocation({ venue }) {
           <span>{venue?.continent}</span>
         </p>
       </div>
+    </div>
+  );
+}
+
+VenueAmenities.propTypes = {
+  venue: PropTypes.object,
+};
+
+function VenueAmenities({ venue }) {
+  console.log(venue?.pets);
+  return (
+    <div className="flex flex-col gap-3 shadow rounded p-3 border border-border">
+      <h2 className="font-bold">Venue Amenities</h2>
+      <ul className="grid grid-cols-2 gap-2 md:gap-5">
+        <li
+          className={`flex items-center justify-center gap-3 rounded p-1 shadow ${
+            venue?.wifi ? "bg-primary text-buttonText" : "bg-border"
+          }`}
+        >
+          <FontAwesomeIcon icon={faWifi} />
+          <span>Wifi</span>
+        </li>
+
+        <li
+          className={`flex items-center justify-center gap-3 rounded p-1 shadow ${
+            venue?.parking ? "bg-primary text-buttonText" : "bg-border"
+          }`}
+        >
+          <FontAwesomeIcon icon={faParking} />
+          <span>Parking</span>
+        </li>
+
+        <li
+          className={`flex items-center justify-center gap-3 rounded p-1 shadow ${
+            venue?.pets ? "bg-primary text-buttonText" : "bg-border"
+          }`}
+        >
+          <FontAwesomeIcon icon={faPaw} />
+          <span>Pets</span>
+        </li>
+
+        <li
+          className={`flex items-center justify-center gap-3 rounded p-1 shadow ${
+            venue?.breakfast ? "bg-primary text-buttonText" : "bg-border"
+          }`}
+        >
+          <FontAwesomeIcon icon={faBreadSlice} />
+          <span>Breakfast</span>
+        </li>
+      </ul>
     </div>
   );
 }
