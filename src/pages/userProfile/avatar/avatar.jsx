@@ -49,7 +49,7 @@ export default function UserAvatar({ userData, setUserData, setIsLoading }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2 w-full h-full">
+    <div className="flex flex-col justify-center items-center gap-2 w-full">
       {userData.avatar ? (
         <img
           className="object-cover w-full md:h-[400px] rounded"

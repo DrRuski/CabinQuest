@@ -1,5 +1,3 @@
-// import { useContext } from "react";
-// import { UserContext } from "../../context/context";
 import Loader from "../../misc/loader";
 import { useParams } from "react-router-dom";
 import {
@@ -15,21 +13,25 @@ import VenuePricing from "./pricing/pricing";
 import VenueLocation from "./location/location";
 import VenueAmenities from "./amenities/amenities";
 import VenueBooking from "./booking/booking";
+import { useEffect } from "react";
 
 export default function VenueDetails() {
-  // const { userData } = useContext(UserContext);
   let params = useParams();
 
-  const { data, isLoading } = useDynamicFetch(
+  const { data, setData, isLoading } = useDynamicFetch(
     `${API_BASE_URL}${VENUES_ENDPOINT}/${params.id}?${QUERY_PARAMS}`,
     getData
   );
-  document.title = `${data?.name}`;
+  useEffect(() => {
+    if (data) {
+      document.title = `${data.name}`;
+    }
+  }, [data]);
 
   return (
     <section className="container mx-auto px-3 md:px-0">
       {isLoading && <Loader />}
-      {!isLoading && (
+      {!isLoading && data && (
         <div className="flex flex-col md:flex-row gap-6 md:gap-[50px]">
           <div className="flex-1">
             <VenueGallery venue={data?.media} />
@@ -41,7 +43,7 @@ export default function VenueDetails() {
               <VenueLocation venue={data?.location} />
             </div>
             <VenueAmenities venue={data?.meta} />
-            <VenueBooking venue={data?.bookings} />
+            <VenueBooking venue={data} setData={setData} />
           </div>
         </div>
       )}
