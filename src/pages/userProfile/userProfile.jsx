@@ -12,8 +12,8 @@ export default function UserProfile() {
 
   return (
     <section className="container mx-auto h-full px-3 md:px-0">
-      <div className="flex flex-col lg:flex-row gap-7 lg:gap-14">
-        <div className="flex flex-col gap-2 items-center p-2 md:p-6 shadow-xl border rounded border-border md:w-[450px]">
+      <div className="flex flex-col lg:flex-row gap-7 lg:gap-14 items-start md:relative">
+        <div className="flex flex-col gap-2 items-center p-2 md:p-6 shadow-xl border rounded border-border md:w-[450px] md:sticky md:top-[125px]">
           {isLoading ? (
             <Loader />
           ) : (

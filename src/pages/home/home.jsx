@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import VenueList from "./venueList";
+import VenueList from "../venueList/venueList";
 
 Home.propTypes = {
   venueData: PropTypes.array,
