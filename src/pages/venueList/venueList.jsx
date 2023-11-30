@@ -8,26 +8,56 @@ import {
   QUERY_PARAMS,
   VENUES_ENDPOINT,
   VENUE_LIMITER,
+  VENUE_SORTING,
 } from "../../data/url/url";
 import Loader from "../../misc/loader";
 import { getData } from "../../data/headers/getData";
+import { useEffect, useState } from "react";
+import Pagination from "./pagination/pagination";
+import Search from "../../components/common/search/search";
 
 export default function VenueList() {
+  const [offset, setOffset] = useState(0);
+  const [searchText, setSearchText] = useState("");
+  const [paginationShow, setPaginationShow] = useState(true);
+  const searchParams = searchText ? "" : `${VENUE_LIMITER}${offset}`;
+
   const { data, isLoading } = useDynamicFetch(
-    `${API_BASE_URL}${VENUES_ENDPOINT}?${VENUE_LIMITER}&${QUERY_PARAMS}`,
+    `${API_BASE_URL}${VENUES_ENDPOINT}?${VENUE_SORTING}&${searchParams}&${QUERY_PARAMS}`,
     getData
   );
+
+  const filteredVenues = data?.filter((venue) =>
+    venue.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  useEffect(() => {
+    if (searchText) {
+      setPaginationShow(false);
+    } else {
+      setPaginationShow(true);
+    }
+  }, [searchText]);
+
   return (
-    <>
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-2 lg:gap-6">
+        <Search
+          query={searchText}
+          setQuery={setSearchText}
+          placeholderText="Search venues..."
+        />
+        {paginationShow && <Pagination offset={offset} setOffset={setOffset} />}
+      </div>
       {isLoading && <Loader />}
       {!isLoading && (
         <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {data?.map((venue) => (
+          {filteredVenues?.map((venue) => (
             <VenueListing key={venue.id} venue={venue} />
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 }
 

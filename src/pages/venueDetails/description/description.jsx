@@ -11,7 +11,7 @@ export default function VenueDescription({ venue }) {
   };
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex gap-3 items-center">
+      <div className="flex gap-3 items-center flex-wrap">
         <img
           className="w-6 object-cover aspect-square rounded"
           src={venue?.owner.avatar}
