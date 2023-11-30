@@ -5,6 +5,7 @@ import { UserContext } from "../../../context/context";
 
 import { postData } from "../../../data/headers/postData";
 import { API_BASE_URL, CREATE_BOOKING } from "../../../data/url/url";
+import { useNavigate } from "react-router-dom";
 
 VenueBooking.propTypes = {
   venue: PropTypes.object,
@@ -14,9 +15,11 @@ VenueBooking.propTypes = {
 
 export default function VenueBooking({ venue, setData }) {
   const { userData } = useContext(UserContext);
+  const [bookingSucc, setBookingSucc] = useState(false);
   const [selectedDates, setSelectedDates] = useState([]);
   const [reserved, setReserved] = useState([]);
   const [guests, setGuests] = useState("");
+  const navigate = useNavigate();
   const handleChange = (e) => setSelectedDates(e);
 
   useEffect(() => {
@@ -50,27 +53,46 @@ export default function VenueBooking({ venue, setData }) {
             ...prevData,
             bookings: [...prevData.bookings, newBooking],
           }));
+          setGuests("");
+          setSelectedDates([]);
+          setBookingSucc(true);
         }
       } catch (error) {
         console.error("Network error", error);
+      } finally {
+        setTimeout(() => {
+          setBookingSucc(false);
+        }, 5000);
       }
     }
   };
 
-  console.log(reserved);
-
   return (
-    <div className="flex flex-col shadow rounded border border-border p-2 gap-2">
-      <div>
+    <div className="flex flex-col shadow rounded border border-border p-2 gap-2 relative">
+      <div className="flex items-center justify-center">
+        {bookingSucc && (
+          <div className="flex flex-col items-center justify-center gap-3 w-3/4 md:w-1/2 bg-buttonText shadow-xl rounded border border-border absolute z-50 text-center p-2 md:p-5">
+            <div>
+              <h3 className="font-bold">Booking was a success</h3>
+              <hr className="w-full border border-border" />
+            </div>
+            <button
+              onClick={() => navigate(`/user/${userData.name}`)}
+              className="bg-primary p-1 w-full rounded shadow text-buttonText hover:bg-accent"
+            >
+              View Booking?
+            </button>
+          </div>
+        )}
         <Calendar
           selected={selectedDates}
           onChange={handleChange}
           onOverbook={(e, err) => alert(err)}
           components={{
             DayCellFooter: ({ innerProps }) => (
-              <div {...innerProps}>
-                <span className={`text-sm `}></span>
-              </div>
+              <span {...innerProps}>
+                <span className="text-sm"></span>
+              </span>
             ),
           }}
           reserved={reserved}

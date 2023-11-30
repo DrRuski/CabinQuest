@@ -14,10 +14,6 @@ export default function VenueGallery({ venue }) {
     }
   }, [venue]);
 
-  const handleImageError = (e) => {
-    e.target.src = "assets/images/imageNotFound.png";
-  };
-
   function handleImageClick(image) {
     setSelectedImage(image);
   }
@@ -27,9 +23,12 @@ export default function VenueGallery({ venue }) {
       <div className="md:col-span-6 md:row-span-2">
         <img
           className="w-full h-full object-cover aspect-4/3 rounded"
-          src={selectedImage}
+          src={
+            selectedImage && selectedImage.length > 0
+              ? selectedImage
+              : "/assets/images/imageNotFound.png"
+          }
           alt={`Venue ${selectedImage}`}
-          onError={handleImageError}
         />
       </div>
       {venue?.map((image, index) => (
@@ -42,7 +41,6 @@ export default function VenueGallery({ venue }) {
             }`}
             src={image}
             alt={`Venue ${index}`}
-            onError={handleImageError}
             onClick={() => handleImageClick(image)}
           />
         </div>

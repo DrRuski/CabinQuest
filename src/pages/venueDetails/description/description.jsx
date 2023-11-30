@@ -7,7 +7,7 @@ VenueDescription.propTypes = {
 
 export default function VenueDescription({ venue }) {
   const handleImageError = (e) => {
-    e.target.src = "assets/images/imageNotFound.png";
+    e.target.src = "/assets/images/imageNotFound.png";
   };
   return (
     <div className="flex flex-col gap-5">
