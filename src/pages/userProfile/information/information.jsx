@@ -53,7 +53,7 @@ export default function UserInformation({ userData, setUserData }) {
         <h2 className="text-lg">{userData.email}</h2>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
         <div
           className={`flex gap-5 items-center w-full ${
             userData.venueManager
@@ -65,9 +65,9 @@ export default function UserInformation({ userData, setUserData }) {
             htmlFor="managerStatus"
             className="cursor-pointer w-full text-center"
           >
-            <div>
+            <div className="w-full">
               {userData.venueManager ? (
-                <p {...statusButtonProps} className="p-2">
+                <p {...statusButtonProps} className="py-2">
                   {statusButtonHover ? (
                     <span>Are you sure you want to quit?</span>
                   ) : (

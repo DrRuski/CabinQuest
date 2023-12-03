@@ -15,7 +15,7 @@ import UserAvatar from "./userAvatar";
 
 export default function Header() {
   return (
-    <header className="shadow bg-background sticky top-0 z-50 py-4">
+    <header className="shadow bg-background sticky top-0 z-50 py-1">
       <NavBar />
     </header>
   );
@@ -61,7 +61,7 @@ function NavBar() {
     <nav className="container mx-auto flex items-center justify-between px-3 md:px-0">
       <NavLink to="/" className="cursor-pointer">
         <img
-          className="block object-cover aspect-square"
+          className="block object-cover aspect-square w-12 lg:w-16"
           src="/assets/images/cabinQSvg.svg"
           alt="CabinQuest"
         />
