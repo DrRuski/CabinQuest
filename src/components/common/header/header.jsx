@@ -61,7 +61,7 @@ function NavBar() {
     <nav className="container mx-auto flex items-center justify-between px-3 md:px-0">
       <NavLink to="/" className="cursor-pointer">
         <img
-          className="block object-cover aspect-square"
+          className="block object-cover aspect-square w-12 lg:w-16"
           src="/assets/images/cabinQSvg.svg"
           alt="CabinQuest"
         />

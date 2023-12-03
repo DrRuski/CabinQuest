@@ -45,22 +45,33 @@ export default function UserBookings({ userData }) {
                     src={item.venue.media[0]}
                     alt=""
                   />
-                  <div>
+                  <div className="flex flex-col gap-1">
                     <h3 className="text-sm md:text-base font-semiBold">
                       {item.venue.name}
                     </h3>
-                    <div className="flex flex-col items-start lg:flex-row lg:items-center lg:gap-5">
-                      <p className="text-sm md:text-base">
-                        {formatDate(item.dateFrom)}
-                      </p>
-                      <FontAwesomeIcon
-                        size="sm"
-                        icon={faArrowRight}
-                        className="hidden lg:block"
-                      />
-                      <p className="text-sm md:text-base">
-                        {formatDate(item.dateTo)}
-                      </p>
+                    <div className="flex items-center gap-2">
+                      <div className="flex flex-col items-start lg:flex-row lg:items-center lg:gap-5">
+                        <p className="text-sm md:text-base">
+                          {formatDate(item.dateFrom)}
+                        </p>
+                        <FontAwesomeIcon
+                          size="sm"
+                          icon={faArrowRight}
+                          className="hidden lg:block"
+                        />
+                        <p className="text-sm md:text-base">
+                          {formatDate(item.dateTo)}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col gap-1 items-start text-[10px] lg:hidden">
+                        <p className="px-[4px] bg-secondary rounded text-text">
+                          Arrival
+                        </p>
+                        <p className="px-[4px] bg-[#FCAEAE] rounded text-text">
+                          Departure
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
