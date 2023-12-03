@@ -106,7 +106,7 @@ export function VenueMobileGallery({ venue }) {
                 />
               ) : (
                 <FontAwesomeIcon
-                  className="h-3 w-3 text-border opacity-30"
+                  className="h-3 w-3 text-border opacity-50"
                   icon={faCircle}
                 />
               )}
