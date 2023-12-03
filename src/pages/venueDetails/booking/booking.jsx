@@ -6,6 +6,7 @@ import { UserContext } from "../../../context/context";
 import { postData } from "../../../data/headers/postData";
 import { API_BASE_URL, CREATE_BOOKING } from "../../../data/url/url";
 import { useNavigate } from "react-router-dom";
+import SignInButton from "../../../components/common/header/signInButton";
 
 VenueBooking.propTypes = {
   venue: PropTypes.object,
@@ -101,33 +102,37 @@ export default function VenueBooking({ venue, setData }) {
           range={true}
         />
       </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-col items-start">
-          <input
-            min={1}
-            max={venue.maxGuests}
-            value={guests}
-            onChange={(e) => {
-              let { value, min, max } = e.target;
-              value = Math.max(
-                Number(min),
-                Math.min(Number(max), Number(value))
-              );
-              setGuests(value);
-            }}
-            placeholder="Attending Guests"
-            className="border border-border rounded shadow p-2 w-full"
-            type="number"
-            name="guests"
-          />
+      {userData.accessToken ? (
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col items-start">
+            <input
+              min={1}
+              max={venue.maxGuests}
+              value={guests}
+              onChange={(e) => {
+                let { value, min, max } = e.target;
+                value = Math.max(
+                  Number(min),
+                  Math.min(Number(max), Number(value))
+                );
+                setGuests(value);
+              }}
+              placeholder="Attending Guests"
+              className="border border-border rounded shadow p-2 w-full"
+              type="number"
+              name="guests"
+            />
+          </div>
+          <button
+            onClick={() => onSubmit(venue.id)}
+            className="bg-primary text-buttonText p-2 rounded hover:bg-accent"
+          >
+            Book Venue
+          </button>
         </div>
-        <button
-          onClick={() => onSubmit(venue.id)}
-          className="bg-primary text-buttonText p-2 rounded hover:bg-accent"
-        >
-          Book Venue
-        </button>
-      </div>
+      ) : (
+        <SignInButton />
+      )}
     </div>
   );
 }

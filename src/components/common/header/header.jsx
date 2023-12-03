@@ -15,7 +15,7 @@ import UserAvatar from "./userAvatar";
 
 export default function Header() {
   return (
-    <header className="shadow bg-background sticky top-0 z-50 py-4">
+    <header className="shadow bg-background sticky top-0 z-50 py-1">
       <NavBar />
     </header>
   );
