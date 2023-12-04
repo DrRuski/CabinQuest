@@ -67,11 +67,11 @@ export default function UserInformation({ userData, setUserData }) {
           >
             <div className="w-full">
               {userData.venueManager ? (
-                <p {...statusButtonProps} className="py-2">
+                <p {...statusButtonProps} className="py-2 w-full">
                   {statusButtonHover ? (
                     <span>Are you sure you want to quit?</span>
                   ) : (
-                    <span className="p-2">
+                    <span className="p-2 w-full">
                       <FontAwesomeIcon
                         icon={faBuildingShield}
                         className="me-2"
@@ -81,11 +81,11 @@ export default function UserInformation({ userData, setUserData }) {
                   )}
                 </p>
               ) : (
-                <p {...statusButtonProps} className="p-2">
+                <p {...statusButtonProps} className="p-2 w-full">
                   {statusButtonHover ? (
                     <span>You Are ONE Click Away!</span>
                   ) : (
-                    <span className="p-2">
+                    <span className="p-2 w-full">
                       <FontAwesomeIcon
                         icon={faBuildingShield}
                         className="me-2"

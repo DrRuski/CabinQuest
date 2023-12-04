@@ -7,6 +7,7 @@ import {
   faBell,
   faChevronRight,
   faDashboard,
+  faInfoCircle,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -24,6 +25,7 @@ export default function Header() {
 function NavBar() {
   const [isOpenBell, setIsOpenBell] = useState(false);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
+  const [hover, setHover] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
   const dropdown = useRef();
 
@@ -37,9 +39,15 @@ function NavBar() {
     } else {
       greeting = `Good evening, ${userData.name}`;
     }
-
     return greeting;
   }
+
+  const onHover = () => {
+    setHover(true);
+  };
+  const onLeaveHover = () => {
+    setHover(false);
+  };
 
   useEffect(() => {
     const checkIfClickOutside = (e) => {
@@ -108,12 +116,36 @@ function NavBar() {
                       location={`user/${userData.name}`}
                       clickLogic={() => setIsOpenDropDown(false)}
                     />
-                    <DropdownItem
-                      text="Dashboard"
-                      icon={faDashboard}
-                      location="dashboard"
-                      clickLogic={() => setIsOpenDropDown(false)}
-                    />
+                    {userData.venueManager ? (
+                      <DropdownItem
+                        text="Dashboard"
+                        icon={faDashboard}
+                        location="dashboard"
+                        clickLogic={() => setIsOpenDropDown(false)}
+                      />
+                    ) : (
+                      <div className="relative">
+                        {hover && (
+                          <span className="text-sm lg:text-base absolute bottom-11 right-0 bg-background border border-warning p-2 lg:w-[400px] z-30 rounded shadow-md">
+                            <FontAwesomeIcon
+                              className="text-warning"
+                              icon={faInfoCircle}
+                            />{" "}
+                            You need to activate &quot;Venue Manager&quot;
+                            status on your profile page to get access to this
+                            section.
+                          </span>
+                        )}
+                        <span
+                          onMouseEnter={onHover}
+                          onMouseLeave={onLeaveHover}
+                          className="flex items-center gap-2 p-2 rounded w-full bg-border opacity-50 cursor-pointer"
+                        >
+                          <FontAwesomeIcon icon={faDashboard} />
+                          Dashboard
+                        </span>
+                      </div>
+                    )}
                     <DropdownItem
                       text="Logout"
                       icon={faSignOut}
@@ -139,16 +171,20 @@ DropdownItem.propTypes = {
   location: PropTypes.string,
   text: PropTypes.string,
   clickLogic: PropTypes.func,
+  className: PropTypes.string,
 };
 
-function DropdownItem({ location, text, icon, size, clickLogic }) {
+function DropdownItem({
+  location,
+  text,
+  icon,
+  size,
+  clickLogic,
+  className = "flex items-center justify-between p-2 rounded hover:shadow-md w-full hover:bg-accent hover:text-buttonText",
+}) {
   return (
     <li>
-      <NavLink
-        to={location}
-        onClick={clickLogic}
-        className="flex items-center justify-between p-2 rounded hover:shadow-md w-full hover:bg-accent hover:text-buttonText"
-      >
+      <NavLink to={location} onClick={clickLogic} className={className}>
         <div className="flex gap-2 items-center">
           <FontAwesomeIcon size={size} icon={icon} />
           <h5>{text}</h5>
