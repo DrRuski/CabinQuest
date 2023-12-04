@@ -1,3 +1,7 @@
-### CabinQuest
+# CabinQuest - Final Exam 2
 
-This website is the last examination project at Noroff School of Technology and Digital Media.
+### Table of Contents
+
+1. Brief.
+2. Website Demo.
+3. External Development.
