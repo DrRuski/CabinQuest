@@ -11,13 +11,14 @@ This is my final examination project submission for the [Frontend Development co
 
 #### Table of Contents
 
-1. [Brief](#brief)
-2. [Project Dev Stack](#project-development-stack)
-3. [Live Website Demo](#live-website-demo)
-4. [External Development](#external-development)
+- [Brief](#brief)
+- [Project Dev Stack](#project-development-stack)
+- [Live Website Demo](#live-website-demo)
+- [External Development](#external-development)
 
 
 ## Brief
+<a name="brief"></a>
 A newly launched accommodation booking site called CabinQuest has approached you to develop a brand new front end for their application.
 While they have a list of requirements, the design and UX has not been specified.
 
@@ -46,7 +47,7 @@ There is two aspects to this brief:
 15. A registered user may logout.
 
 ## Project Development Stack
-
+<a name="project-development-stack"></a>
 The development stack used for this project:
 - [Javascript](https://www.javascript.com/) as the programming language.
 - [Tailwind](https://tailwindcss.com/) as the styling CSS framework.
@@ -57,6 +58,7 @@ The development stack used for this project:
 - [Demark-Pro React Booking Calendar](https://www.npmjs.com/package/@demark-pro/react-booking-calendar) for displaying customer bookings and dates.
 
 ## Live Website Demo
+<a name="live-website-demo"></a>
 
 Website Link:
 ```
@@ -74,7 +76,7 @@ TestingAccountTwo123
 
 
 ## External Development
-
+<a name="external-development"></a>
 1. Clone the repo through github app/website or use the CLI command:
 ```
 git clone https://github.com/DrRuski/CabinQuest.git
