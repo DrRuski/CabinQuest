@@ -1,4 +1,4 @@
-# CabinQuest - Noroff Final Exam 2
+# CabinQuest - Project Exam 2 - Noroff
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4256ebe3-cb39-4462-a3b0-579ebc062da6/deploy-status)](https://app.netlify.com/sites/exquisite-rugelach-c27793/deploys)
 
 Home             |  Profile
@@ -7,7 +7,7 @@ Home             |  Profile
 VM Dashboard             |  Individual Venue
 ![bilde](https://github.com/DrRuski/CabinQuest/assets/96174153/92f7b9d1-2cb9-462d-bc8e-45fe69403f7e)  |  ![bilde](https://github.com/DrRuski/CabinQuest/assets/96174153/ae0d815d-2d53-49c8-88c7-bb1c72238e76)
 
-
+This is my final examination project submission for the [Frontend Development course](https://www.noroff.no/en/studies/vocational-school/front-end-development) at Noroff School of technology and digital media.
 
 #### Table of Contents
 
@@ -51,7 +51,7 @@ The development stack used for this project:
 - [Javascript](https://www.javascript.com/) as the programming language.
 - [Tailwind](https://tailwindcss.com/) as the styling CSS framework.
 - [Vite](https://vitejs.dev/) as the build tool.
-- [React](https://react.dev/) as the UI library.
+- [React](https://react.dev/) as the JS framework.
 - [React Router DOM](https://reactrouter.com/en/main) for routing.
 - [React Hook Form](https://react-hook-form.com/) as the default submission, validation, state and handling toolkit.
 - [Demark-Pro React Booking Calendar](https://www.npmjs.com/package/@demark-pro/react-booking-calendar) for displaying customer bookings and dates.
