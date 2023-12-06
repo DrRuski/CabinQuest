@@ -15,18 +15,12 @@ import { getData } from "../../data/headers/getData";
 import { useEffect, useState } from "react";
 import Pagination from "./pagination/pagination";
 import Search from "../../components/common/search/search";
-// import MetaSearch from "./meta/meta";
 
 export default function VenueList() {
   const [offset, setOffset] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [paginationShow, setPaginationShow] = useState(true);
   const searchParams = searchText ? "" : `&${VENUE_LIMITER}${offset}`;
-
-  // const [wifi, setWifi] = useState(false);
-  // const [parking, setParking] = useState(false);
-  // const [pets, setPets] = useState(false);
-  // const [breakfast, setBreakfast] = useState(false);
 
   const { data, isLoading } = useDynamicFetch(
     `${API_BASE_URL}${VENUES_ENDPOINT}?${VENUE_SORTING}&${QUERY_PARAMS}${searchParams}`,
@@ -53,16 +47,6 @@ export default function VenueList() {
           setQuery={setSearchText}
           placeholderText="Search venues..."
         />
-        {/* <MetaSearch
-          wifi={wifi}
-          setWifi={setWifi}
-          parking={parking}
-          setParking={setParking}
-          pets={pets}
-          setPets={setPets}
-          breakfast={breakfast}
-          setBreakfast={setBreakfast}
-        /> */}
         {paginationShow && <Pagination offset={offset} setOffset={setOffset} />}
       </div>
       {isLoading && <Loader />}
